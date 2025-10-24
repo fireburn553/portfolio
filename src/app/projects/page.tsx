@@ -6,9 +6,9 @@ import { projects } from "../data/projects";
 import ProjectCard from "../components/ProjectCard";
 
 // Extract unique categories dynamically
-const categories = [
+const categories: string[] = [
   "All",
-  ...Array.from(new Set(projects.map((p) => p.category))),
+  ...(Array.from(new Set(projects.map((p) => p.category))) as string[]),
 ];
 
 export default function ProjectsPage() {
