@@ -1,39 +1,9 @@
+// src/app/projects/page.tsx
 "use client";
 
 import { useState } from "react";
-
-// Example project data
-const projects = [
-  {
-    id: 1,
-    title: "Red Cross Youth Database",
-    description: "A role-based web application for managing youth volunteers.",
-    category: "Web Development",
-    tech: ["Next.js", "PostgreSQL", "Node.js"],
-  },
-  {
-    id: 2,
-    title: "FSY Attendance System",
-    description:
-      "A Blazor Server app with role-based authentication and QR code tracking.",
-    category: "Blazor / .NET",
-    tech: [".NET 8", "SQLite", "Blazor"],
-  },
-  {
-    id: 3,
-    title: "Research Repository Website",
-    description: "A searchable repository for student journals and articles.",
-    category: "Web Development",
-    tech: ["Next.js", "PostgreSQL"],
-  },
-  {
-    id: 4,
-    title: "Unit Converter CLI",
-    description: "A Kotlin CLI app for unit conversion.",
-    category: "CLI Apps",
-    tech: ["Kotlin"],
-  },
-];
+import { projects } from "../data/projects";
+import ProjectCard from "../components/ProjectCard";
 
 // Extract unique categories dynamically
 const categories = [
@@ -60,28 +30,35 @@ export default function ProjectsPage() {
   });
 
   return (
-    <main className="p-8 max-w-5xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">My Projects</h1>
+    <main className="p-8 max-w-6xl mx-auto">
+      <div className="text-center mb-12">
+        <h1 className="text-4xl font-bold text-blue-900 mb-4  dark:text-blue-300 mb-6">
+          My Projects
+        </h1>
+        <p className="text-lg text-gray-600  dark:text-gray-300 leading-relaxed">
+          A collection of my work and experiments.
+        </p>
+      </div>
 
       {/* Search Bar */}
       <input
         type="text"
-        placeholder="Search projects..."
-        className="w-full p-2 mb-4 border rounded-md"
+        placeholder="Search projects by title, description, or tech..."
+        className="w-full p-3 mb-6 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
 
       {/* Category Filters */}
-      <div className="flex gap-2 mb-6 flex-wrap">
+      <div className="flex justify-center gap-2 mb-10 flex-wrap">
         {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
-            className={`px-4 py-2 rounded-md border ${
+            className={`px-4 py-2 rounded-full font-semibold transition-colors ${
               selectedCategory === cat
                 ? "bg-blue-600 text-white"
-                : "bg-gray-100 hover:bg-gray-200"
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
             }`}
           >
             {cat}
@@ -90,30 +67,24 @@ export default function ProjectsPage() {
       </div>
 
       {/* Projects List */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredProjects.length > 0 ? (
           filteredProjects.map((project) => (
-            <div
-              key={project.id}
-              className="p-4 border rounded-lg shadow hover:shadow-lg transition"
-            >
-              <h2 className="text-xl font-semibold">{project.title}</h2>
-              <p className="text-gray-600">{project.description}</p>
-              <p className="mt-2 text-sm text-blue-600">{project.category}</p>
-              <div className="flex flex-wrap gap-2 mt-2">
-                {project.tech.map((t) => (
-                  <span
-                    key={t}
-                    className="px-2 py-1 bg-gray-200 text-sm rounded-md"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
+            <ProjectCard
+              key={project.slug}
+              title={project.title}
+              description={project.description}
+              tech={project.tech}
+              image={project.image[0]}
+              github={project.github}
+              demo={project.demo}
+              slug={project.slug}
+            />
           ))
         ) : (
-          <p>No projects found.</p>
+          <p className="col-span-full text-center text-gray-500">
+            No projects found.
+          </p>
         )}
       </div>
     </main>

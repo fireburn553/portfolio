@@ -1,7 +1,9 @@
+// src/app/page.tsx
 import Hero from "./components/Hero";
 import ProjectCard from "./components/ProjectCard";
+import Skills from "./components/Skills";
 import { projects } from "./data/projects";
-
+import Link from "next/link";
 export default function Home() {
   const featured = projects.slice(0, 4); // first 4 projects
   return (
@@ -10,8 +12,10 @@ export default function Home() {
 
       {/* About Me */}
       <section className="py-16" id="about">
-        <h2 className="text-3xl font-bold text-blue-900 mb-6">About Me</h2>
-        <p className="text-gray-700 leading-relaxed">
+        <h2 className="text-3xl font-bold text-blue-900 dark:text-blue-300 mb-6">
+          About Me
+        </h2>
+        <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
           Hello! I’m <strong>James Charlie Salva</strong>, a Software
           Development student at BYU-Idaho Online and a graduate of Information
           Technology from Camarines Norte State College. My academic journey and
@@ -20,32 +24,36 @@ export default function Home() {
         </p>
       </section>
 
+      {/* Skills Section */}
+      <Skills />
+
       {/* Featured Projects */}
       <section className="py-16" id="projects">
-        <h2 className="text-3xl font-bold text-blue-900 mb-6">
+        <h2 className="text-3xl font-bold text-blue-900 dark:text-blue-300 mb-6">
           Featured Projects
         </h2>
         <div className="grid md:grid-cols-2 gap-6">
-          {featured.map((project, index) => (
+          {featured.map((project) => (
             <ProjectCard
-              key={index}
+              key={project.slug}
               title={project.title}
               description={project.description}
               tech={project.tech}
-              image={project.image}
+              image={project.image[0]}
               github={project.github}
               demo={project.demo}
+              slug={project.slug}
             />
           ))}
         </div>
 
         <div className="text-center mt-8">
-          <a
+          <Link
             href="/projects"
             className="px-6 py-3 bg-blue-900 text-white rounded-lg shadow hover:bg-blue-800"
           >
             View All Projects
-          </a>
+          </Link>
         </div>
       </section>
     </>
