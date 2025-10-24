@@ -1,14 +1,18 @@
 // src/app/projects/[slug]/page.tsx
+
 import { projects } from "../../data/projects";
 import Link from "next/link";
 import ProjectCarousel from "../../components/Carousel";
 
-export default function ProjectDetailPage({
+interface ProjectDetailPageProps {
+  params: Promise<{ slug: string }>; // 👈 params is now a Promise
+}
+
+export default async function ProjectDetailPage({
   params,
-}: {
-  params: { slug: string };
-}) {
-  const project = projects.find((p) => p.slug === params.slug);
+}: ProjectDetailPageProps) {
+  const { slug } = await params; // 👈 must await
+  const project = projects.find((p) => p.slug === slug);
 
   if (!project) {
     return (
