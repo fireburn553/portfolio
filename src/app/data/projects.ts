@@ -15,6 +15,18 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    "title": "Safety Service Dashboard",
+  "slug": "safety-service-dashboard",
+  "description": "A web application for managing safety service classes, participants, grading, and certificates.",
+  "longDescription": "This full-stack project provides a centralized dashboard for administrators and instructors, likely for organizations like the Philippine Red Cross Safety Services. Built using React (with TypeScript and Vite) for the frontend and Node.js (with Express and PostgreSQL) for the backend. Key features include role-based access control (Admin, Instructor), management of training classes, participant registration and tracking, grading functionality, and automated generation of PDF certificates and reports using Puppeteer. The application is deployed with the frontend on Vercel and the backend on Render.",
+  "tech": ["React", "TypeScript", "Node.js", "Express", "PostgreSQL", "JWT", "Bootstrap", "Vite", "Puppeteer"],
+  "image": ["/projects/ssdashboard/ss.png", "/projects/ssdashboard/ss1.png", "/projects/ssdashboard/ss2.png", "/projects/ssdashboard/ss3.png", "/projects/ssdashboard/ss4.png", "/projects/ssdashboard/ss5.png", "/projects/ssdashboard/ss6.png", "/projects/ssdashboard/ss7.png", "/projects/ssdashboard/ss8.png", "/projects/ssdashboard/ss9.png", "/projects/ssdashboard/ss10.png", "/projects/ssdashboard/ss11.png", "/projects/ssdashboard/ss12.png", "/projects/ssdashboard/ss13.png", "/projects/ssdashboard/ss14.png", "/projects/ssdashboard/ss15.png", "/projects/ssdashboard/ss16.png", "/projects/ssdashboard/ss17.png", "/projects/ssdashboard/ss18.png", "/projects/ssdashboard/ss19.png", "/projects/ssdashboard/ss20.png",], 
+  "github": "https://github.com/fireburn553/ssdashboard",
+  "category": "Volunteer", 
+  "status": "In Progress",
+  "website": "https://ss-dashboard-two.vercel.app/" 
+  },
+  {
     title: "FSY Attendance System",
     slug: "fsy-attendance-system",
     description:
