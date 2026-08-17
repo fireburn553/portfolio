@@ -10,17 +10,19 @@ export default function Home() {
     <>
       <Hero />
 
-      {/* About Me */}
-      <section className="py-16" id="about">
-        <h2 className="text-3xl font-bold text-blue-900 dark:text-blue-300 mb-6">
-          About Me
-        </h2>
-        <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-          Hello! I’m <strong>James Charlie Salva</strong>, a Software
-          Development student at BYU-Idaho Online and a graduate of Information
-          Technology from Camarines Norte State College. My academic journey and
-          volunteer work with the Red Cross Youth shaped my passion for building
-          impactful software solutions that help communities and organizations.
+      {/* About */}
+      <section className="py-16 max-w-3xl" id="about">
+        <h2 className="text-3xl font-bold text-blue-300 mb-6">About</h2>
+        <p className="text-gray-300 leading-relaxed">
+          I&apos;m James Charlie Salva, a frontend developer based in the Philippines. I work
+          on two kinds of project: contract engineering inside product teams, where I
+          handle complex interface state, multi-language builds and payment flows;
+          and full redesigns for businesses whose website has stopped doing its job.
+        </p>
+        <p className="text-gray-300 leading-relaxed mt-4">
+          Every redesign I quote starts with a measured audit of the current site, so
+          the scope is based on findings rather than assumptions. You get that report
+          whether or not the project goes ahead.
         </p>
       </section>
 

@@ -1,7 +1,7 @@
 # NOTES
 
-Things noticed while doing the six tasks on `fix/critical`. **Nothing here was fixed** —
-recorded only, per instructions.
+Things noticed while doing the six tasks on `fix/critical` and the five on
+`fix/positioning`. **Nothing here was fixed** — recorded only, per instructions.
 
 ## Action required
 
@@ -11,6 +11,45 @@ recorded only, per instructions.
 - **`NEXT_PUBLIC_SITE_URL` is not set anywhere.** `metadataBase` falls back to
   `https://jamessalva-portfolio.vercel.app`. If the live URL differs, set the env var in
   Vercel or the OG/Twitter image URLs will resolve against the wrong origin.
+
+## From `fix/positioning`
+
+- **`fix/critical` was never merged.** `master` and `origin/master` are both still at
+  `e750e75`. `fix/positioning` was branched off the tip of `fix/critical` (`fbf16d2`)
+  rather than off `master`, because branching from `master` would have dropped every
+  change from the six earlier tasks and left task 3 with no `<li>` to correct. Merge
+  `fix/critical` first, then `fix/positioning` on top.
+- **Site-wide name is "James Charlie Salva".** Task 4 originally standardised on the short
+  form "James Salva"; that was reversed on request afterwards, so all display copy now uses
+  the full name — navbar, footer, About paragraph, and every `title` / `siteName` /
+  image `alt` in the layout metadata. `public/og.png` was regenerated to match, since the
+  old name was baked into the image pixels.
+- **Two `jamessalva` strings were deliberately NOT renamed**, because they are addresses
+  rather than display copy: the LinkedIn slug `linkedin.com/in/jamessalva`
+  (`Footer.tsx:41`, `contact/page.tsx:35,40`) and the `metadataBase` fallback domain
+  `jamessalva-portfolio.vercel.app` (`layout.tsx:10`). Editing either would break a real
+  link. The contact email `jamescharliesalva@hotmail.com` now matches the full name.
+- **The homepage "View All Projects" button is still `bg-blue-900`** in
+  `src/app/page.tsx`. That is the same colour the hero gradient was deleted for
+  (1.71:1 on `bg-gray-900`). White text on `blue-900` is a different measurement and
+  probably passes, but the button now clashes with the hero's `bg-blue-600` CTA — the
+  page has two different primary-button blues. Out of scope for task 2, which only
+  covered the About section.
+- **`Navbar.tsx` and `Footer.tsx` are still `bg-blue-950` with `red-400` accents.** The
+  new hero drops red entirely in favour of blue/grey, so the navbar hover colour is now
+  the only red on the page.
+- **`Navbar.tsx:48`** — the mobile menu button uses `focus:outline-none` with no
+  replacement ring, so it is keyboard-focusable but shows nothing on focus. The new hero
+  buttons added real `focus-visible` rings; this button is now the odd one out.
+- **`Navbar.tsx:6`** — leftover instructional comment in committed code:
+  `// install react-icons if not yet: npm i react-icons`.
+- **The FSY Attendance project no longer has a live link.** Its Azure host is gone
+  (NXDOMAIN — see the task 5 notes), so its `website` line was removed. The project still
+  renders with its GitHub link; the "Visit Website" block and the `website?: string`
+  interface field were both left in place for a future working URL.
+- **Two GitHub Pages links are single points of failure.** `psgc_frontend` and
+  `job-application-manager` both return 200 today, but free-tier hosts are exactly what
+  went dead on the Azure one. Worth re-checking before the proposal goes out.
 
 ## Build environment
 

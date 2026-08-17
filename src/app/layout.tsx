@@ -9,12 +9,12 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ?? "https://jamessalva-portfolio.vercel.app"
   ),
-  title: "James Salva — Frontend Developer",
+  title: "James Charlie Salva — Frontend Developer",
   description: "Frontend developer. I audit websites before I rebuild them.",
   openGraph: {
     type: "website",
-    siteName: "James Salva",
-    title: "James Salva — Frontend Developer",
+    siteName: "James Charlie Salva",
+    title: "James Charlie Salva — Frontend Developer",
     description: "Frontend developer. I audit websites before I rebuild them.",
     url: "/",
     images: [
@@ -22,13 +22,13 @@ export const metadata: Metadata = {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "James Salva — Frontend Developer",
+        alt: "James Charlie Salva — Frontend Developer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "James Salva — Frontend Developer",
+    title: "James Charlie Salva — Frontend Developer",
     description: "Frontend developer. I audit websites before I rebuild them.",
     images: ["/og.png"],
   },

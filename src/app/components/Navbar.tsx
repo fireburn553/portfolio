@@ -25,7 +25,7 @@ export default function Navbar() {
           className="font-bold text-xl hover:text-red-400 transition-colors"
           onClick={() => setIsOpen(false)}
         >
-          JCSalva
+          James Charlie Salva
         </Link>
 
         {/* Desktop Nav */}

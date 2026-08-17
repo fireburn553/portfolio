@@ -38,7 +38,6 @@ export const projects: Project[] = [
     github: "https://dev.azure.com/utc11dotNetgroupOrganisation/cse325/_git/cse325",
     category: "School",
     status: "Completed",
-    website: "https://fsyattendance2-f6g3g2bsbgdqfzas.southafricanorth-01.azurewebsites.net/",
   },
   {
     title: "Location Selector Web App",
