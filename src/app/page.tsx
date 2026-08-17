@@ -8,6 +8,7 @@ import { caseStudies } from "./data/caseStudies";
 import Link from "next/link";
 export default function Home() {
   const featured = projects.slice(0, 4); // first 4 projects
+  const latestCaseStudies = caseStudies.slice(0, 2); // latest 2 audits
   return (
     <>
       <Hero />
@@ -34,7 +35,7 @@ export default function Home() {
           Audits &amp; case studies
         </h2>
         <div className="grid md:grid-cols-2 gap-6">
-          {caseStudies.map((study) => (
+          {latestCaseStudies.map((study) => (
             <CaseStudyCard
               key={study.slug}
               slug={study.slug}
@@ -51,13 +52,10 @@ export default function Home() {
             href="/case-studies"
             className="px-6 py-3 bg-blue-900 text-white rounded-lg shadow hover:bg-blue-800"
           >
-            View all case studies
+            View all case studies &rarr;
           </Link>
         </div>
       </section>
-
-      {/* Skills Section */}
-      <Skills />
 
       {/* Featured Projects */}
       <section className="py-16" id="projects">
@@ -85,10 +83,13 @@ export default function Home() {
             href="/projects"
             className="px-6 py-3 bg-blue-900 text-white rounded-lg shadow hover:bg-blue-800"
           >
-            View All Projects
+            View all projects &rarr;
           </Link>
         </div>
       </section>
+
+      {/* Skills Section */}
+      <Skills />
     </>
   );
 }

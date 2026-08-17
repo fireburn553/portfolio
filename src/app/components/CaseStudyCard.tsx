@@ -23,7 +23,11 @@ export default function CaseStudyCard({
           {sector}
         </p>
         <h3 className="mt-3 font-bold text-lg text-blue-300">{title}</h3>
-        <p className="text-sm text-gray-400 mt-2 flex-grow">{summary}</p>
+        {/* Real summaries run 370-400 characters, which is 10-12 lines in a
+            three-column card. Clamped here; the full text is on the detail page. */}
+        <p className="text-sm text-gray-400 mt-2 flex-grow line-clamp-4">
+          {summary}
+        </p>
         <p className="mt-4 text-xs text-gray-500 italic">{engagement}</p>
         <span className="mt-3 text-sm text-blue-400 underline">
           Read the audit &rarr;

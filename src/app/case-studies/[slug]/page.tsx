@@ -38,6 +38,15 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         {study.title}
       </h1>
 
+      {/* Sector and audit date. Both are CaseStudy fields that the original
+          template never rendered, so they are surfaced here as a single muted
+          metadata line rather than as new page sections. */}
+      <p className="mt-4 text-sm text-gray-500">
+        {study.sector}
+        <span className="mx-2 text-gray-700">&middot;</span>
+        Audited {study.auditDate}
+      </p>
+
       {/* 3. Summary */}
       <p className="mt-7 text-lg text-gray-400 leading-relaxed">
         {study.summary}

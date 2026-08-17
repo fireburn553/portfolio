@@ -1,15 +1,18 @@
 # NOTES
 
 Things noticed while doing the six tasks on `fix/critical`, the five on
-`fix/positioning`, the four on `feat/conversion` and the four on `feat/case-studies`.
-**Nothing here was fixed** — recorded only, per instructions.
+`fix/positioning`, the four on `feat/conversion`, the four on `feat/case-studies` and the
+four on `feat/homepage-surfacing`. **Nothing here was fixed** — recorded only, per
+instructions.
 
 ## Action required
 
-- **Every prose string in `src/app/data/caseStudies.ts` is placeholder copy**, prefixed
-  `PLACEHOLDER` so it cannot ship by accident. The page renders and the layout is settled,
-  but `/case-studies/pest-control` currently reads as filler. Replace before this is linked
-  anywhere public — the homepage and the main nav already point at it.
+- **The fourth credential in `financial-advisory/concept.html` still names Ateneo.** The
+  anonymisation sweep closed the third item; the fourth is the same kind of leak and is still
+  live. See the `feat/homepage-surfacing` notes.
+- **`caseStudies.ts` placeholder copy is now resolved** — real two-entry copy was installed
+  from `~/Downloads` on `feat/homepage-surfacing`. Superseded; kept only so the history of this
+  list reads straight.
 - **`NEXT_PUBLIC_FORM_ENDPOINT` is not set, so the audit form cannot send.** Sign up for
   Formspree or Web3Forms, then set the var in Vercel (Project → Settings → Environment
   Variables) and in a local `.env.local`. `.env.example` documents the shape. Until it is
@@ -21,6 +24,58 @@ Things noticed while doing the six tasks on `fix/critical`, the five on
 - **`NEXT_PUBLIC_SITE_URL` is not set anywhere.** `metadataBase` falls back to
   `https://jamessalva-portfolio.vercel.app`. If the live URL differs, set the env var in
   Vercel or the OG/Twitter image URLs will resolve against the wrong origin.
+
+## From `feat/homepage-surfacing`
+
+- **`caseStudies.ts` was NOT actually replaced in the repo — the real copy was still sitting
+  in `~/Downloads`.** The task brief stated the file had already been swapped for real
+  two-entry copy, but `origin/master` (`c4d97be`) still carried the 33-`PLACEHOLDER`,
+  one-entry version I seeded on the previous branch. The real file was attached to the message
+  as `C:\Users\Admin\Downloads\caseStudies.ts` (13,494 bytes, two entries) and was copied into
+  `src/app/data/caseStudies.ts` as the first step, because Tasks 1b, 2, 3c and 4 all assume it
+  is in place and would have been unverifiable against placeholders. Its interface is
+  byte-identical to the seeded one, so nothing else needed adjusting. **Worth checking whether
+  any other "already replaced" file is similarly still in Downloads.**
+- **`tel:` hrefs now contain spaces, as a direct consequence of the requested replacement.**
+  Task 3a specified replacing both the compact `+639666642690` and the formatted
+  `+63 966 664 2690` with the single string `+63 2 8888 0000`. The compact form only ever
+  appeared inside `href="tel:..."`, so both links are now
+  `href="tel:+63 2 8888 0000"`. RFC 3966 does not permit spaces in a `tel:` URI; browsers
+  strip them and the link still dials, so this is cosmetic rather than broken. Done exactly as
+  specified — but if a strictly valid URI is wanted, the hrefs should be
+  `tel:+63288880000` while the visible text keeps the spaced form.
+- **The fourth credential still names a specific institution.** Task 3b anonymised the third
+  `<li>` under `.creds`, but the fourth still reads "Programme director, Ateneo Financial
+  Markets Certification". Ateneo is a named university and the certification is specific
+  enough to identify the firm to anyone in the sector — the same class of leak the third item
+  was changed to close. Left alone because the task named only the third item.
+- **Both `data-note` annotations naming third-party vendors survive by design.** The four
+  Task 3c hits (JotForm ×2, jotform ×1, Calendly ×1) are all inside annotation tooltips in
+  `financial-advisory/concept.html`. They name vendors, not the client, so they do not identify
+  the business — but they do disclose which SaaS the audited firm was using, which a reader
+  could combine with other details. Reported unchanged as instructed.
+- **The detail template was missing two interface fields, now added.** `sector` and
+  `auditDate` were in the `CaseStudy` interface but rendered nowhere — the previous branch's
+  notes flagged `auditDate`; `sector` was missed there. Both now render as one muted metadata
+  line between the h1 and the summary. This was the minimum change that satisfies "render
+  every field in the interface" without adding a tenth page block.
+- **`CaseStudyCard` needed no field remapping — it was already correct.** It was built against
+  the same field names the real data uses (`slug`, `title`, `sector`, `summary`,
+  `engagement`), so nothing was mis-mapped. The only change was clamping the summary, since
+  real summaries run 370-400 characters where the placeholder ran ~180.
+- **The homepage "View all …" buttons are still `bg-blue-900`,** which the `fix/positioning`
+  notes already flagged as clashing with the hero's `bg-blue-600` primary CTA. There are now
+  two of them rather than one, so the page shows the same off-palette blue twice. Matched
+  deliberately, per Task 1c's instruction to match the existing button styling.
+- **`caseStudies.slice(0, 2)` encodes "latest first" as array order, with nothing enforcing
+  it.** Both entries carry `auditDate: "17 August 2026"` — identical dates, so "latest" is
+  currently meaningless and the homepage order is just whatever order the array happens to be
+  in. Same unenforced assumption as `projects.slice(0, 4)`. If ordering ever matters, sort on
+  `auditDate` — which would first require it to be a parseable date rather than the display
+  string "17 August 2026".
+- **The Tailwind `public/**/*.html` scanning issue from the previous branch is unchanged** and
+  still costs ~664 bytes of dead CSS sitewide. One line in `globals.css` fixes it:
+  `@source not "../../public/**/*.html";`. Not applied — out of scope again.
 
 ## From `feat/case-studies`
 
