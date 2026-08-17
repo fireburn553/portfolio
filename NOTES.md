@@ -1,16 +1,131 @@
 # NOTES
 
-Things noticed while doing the six tasks on `fix/critical` and the five on
-`fix/positioning`. **Nothing here was fixed** — recorded only, per instructions.
+Things noticed while doing the six tasks on `fix/critical`, the five on
+`fix/positioning` and the four on `feat/conversion`. **Nothing here was fixed** —
+recorded only, per instructions.
 
 ## Action required
 
+- **`NEXT_PUBLIC_FORM_ENDPOINT` is not set, so the audit form cannot send.** Sign up for
+  Formspree or Web3Forms, then set the var in Vercel (Project → Settings → Environment
+  Variables) and in a local `.env.local`. `.env.example` documents the shape. Until it is
+  set the form renders and validates normally but the submit handler shows a
+  "not connected yet" error — verified, see the `feat/conversion` notes below.
 - **`public/og.png` is a placeholder.** Solid `#111827` with centred white text, generated
   with a throwaway sharp script (script deleted). Replace it with a real designed card
   before the proposal goes out.
 - **`NEXT_PUBLIC_SITE_URL` is not set anywhere.** `metadataBase` falls back to
   `https://jamessalva-portfolio.vercel.app`. If the live URL differs, set the env var in
   Vercel or the OG/Twitter image URLs will resolve against the wrong origin.
+
+## From `feat/conversion`
+
+- **Task 4b found nothing to remove.** `src/app/layout.tsx:53` is a bare `<Analytics />`
+  with no props and no attributes. There is no `data-disable-auto-track="1"` and no
+  equivalent (`mode`, `beforeSend`, `disableAutoTrack`) anywhere in `src/` — grepped the
+  whole tree. Pageview auto-tracking was therefore already on, and `layout.tsx` was left
+  untouched as instructed. The new `track("audit_request_submitted")` call in
+  `AuditRequestForm.tsx` sits alongside it.
+- **Local `master` is stale at `e750e75`; `origin/master` is at `9bbe552`.** The merge of
+  PR #3 (`fix/positioning`) landed on the remote but the local branch pointer was never
+  updated, so `git checkout -b feat/conversion master` would have branched off a tree with
+  the old gradient hero and no "Request a free audit" CTA. Branched off `origin/master`
+  instead, which is content-identical to `fix/positioning`. Run `git checkout master &&
+  git pull` to resync the local pointer.
+- **`.gitignore` line 34 (`.env*`) was swallowing the new `.env.example`.** Verified with
+  `git check-ignore -v`. Added `!.env.example` on line 35 — the only edit made to a file
+  outside the four tasks, and made because the requested file is useless if git refuses to
+  track it. The real `.env` / `.env.local` are still ignored.
+- **The task spec and the `Project` interface disagree on two field names.** The spec asked
+  for `images: []`; the interface field is `image: string[]`. The spec also said to match the
+  interface exactly, and the interface won — the new entry uses `image: []`. Same interface
+  requires `longDescription`, which the spec did not supply; the `description` text is
+  reused verbatim rather than inventing client detail that cannot be verified. **Write a
+  real `longDescription` for the gaming-platform entry before the proposal goes out** — the
+  detail page currently shows the card blurb twice.
+- **`image: []` needed guards in two components, or the new entry crashes the render.**
+  `ProjectCard` was passed `image={project.image[0]}` — `undefined` for an entry with no
+  screenshots, and `next/image` throws on a missing `src`. `image` is now optional there and
+  falls through to the existing placeholder SVG. `projects/[slug]/page.tsx` now skips
+  `<ProjectCarousel>` entirely when `image.length === 0`, rather than mounting
+  `react-responsive-carousel` with zero children.
+- **The `/projects` filter buttons are still light-mode colours.** `bg-gray-100
+  text-gray-700 hover:bg-gray-200` on a `bg-gray-900` page — a row of near-white pills. The
+  new disabled "Audits" state was styled to the dark palette (`bg-gray-800 text-gray-500
+  border-gray-700`), so the disabled button now looks more at home on the page than the
+  enabled ones do. Restyling the enabled states was out of scope for task 1.
+- **The `/projects` search input is also light-mode** (`border-gray-200`, no background set,
+  so white-on-dark) and uses `focus:outline-none focus:border-blue-500` — same missing-ring
+  pattern flagged on the navbar button. The new form's inputs all got real
+  `focus-visible` rings; these two controls are now the outliers.
+- **`/projects` intro copy still reads "A collection of my work and experiments."** That
+  undercuts the same twenty-plus-production-platforms claim task 1 was meant to support,
+  in the same way the old category tags did.
+- **The new entry pushes the ISO Audit System off the homepage.** `src/app/page.tsx` slices
+  `projects.slice(0, 4)`; five entries became six, so the last one no longer appears under
+  Featured Projects. Intended consequence of leading with the client work. Superseded — see
+  the Stanway section, where the array reached seven and the slice now hides three.
+- **"Audits" has zero entries and renders disabled, as instructed.** Ship the case study
+  soon — a permanently greyed-out filter reads as a broken control, not as a coming-soon.
+- **The existing `.next` build-corruption note is worse than recorded, and the error message
+  is a liar.** An orphaned `next start` holding `.next` does not only cause `EPERM` — it also
+  lets a build finish with exit 0 while silently dropping webpack chunks, so `next start`
+  then 500s every route with `Cannot find module './586.js'` from `pages/_document.js`. The
+  same root cause surfaced three different messages in one session: `PageNotFoundError:
+  /_document`, `Failed to collect page data for /experience`, and the missing-chunk require
+  error. None of them mention the real problem. `taskkill /F /IM node.exe` then
+  `rm -rf .next` before building is the reliable fix. Worth a `"prebuild": "rimraf .next"`
+  script, or at least a line in the README.
+- **`node_modules` is out of sync with the manifest: installed `next` is 15.5.2, but
+  `package.json` and `package-lock.json` both say 15.5.9.** The CVE-fix commit (`b4e1b32`)
+  bumped the manifest and nobody re-ran `npm install` locally. The build works on 15.5.2, so
+  this is not urgent, but **every local build is currently testing a different Next version
+  than Vercel will deploy** — including the version the CVE fix was meant to deliver. Run
+  `npm ci`. Not run here, since the instructions ruled out dependency changes.
+
+## Stanway Real Estate entry
+
+- **The live site's own footer contradicts the stated tech stack, and this needs settling
+  before the entry goes public.** The project was supplied as `#Wordpress #Elementor
+  #EstatedAPI` and is tagged that way. But `stanwayrealestate.com` renders "Powered by
+  **Avenue**" in the footer (Avenue is a hosted real-estate website platform, not
+  WordPress), the brokerage line reads "RE/MAX ULTIMATE REALTY INC.", and the listings
+  disclaimer credits the **Toronto Regional Real Estate Board (TRREB)** for property data —
+  not Estated. If the tags describe a different build than what is live at that URL, a
+  prospect who checks — and on a site whose entire pitch is "I measure before I rebuild",
+  someone will — finds the portfolio overstating the work. Either correct the `tech` array,
+  or drop the `website` link and describe it as a build no longer in production. Left exactly
+  as supplied for now; this is a factual call only the author can make.
+- **Screenshots were 29MB of PNG for ten files; now 1.58MB of WebP.** The eight homepage
+  scroll captures were resized to 1600px wide and re-encoded at q82 (text stayed crisp —
+  spot-checked the listings card, which is the most type-heavy frame). Originals are in the
+  session scratchpad under `stanway-originals/`, not in git. If they are wanted permanently,
+  move them somewhere outside the repo before the scratchpad is cleaned.
+- **Two full-page captures are on disk but referenced nowhere.**
+  `stanway-home-fullpage.webp` and `stanway-about-fullpage.webp` (558KB combined) are
+  deliberately excluded from `image[]`: at 2278x10744 the home capture is a 1:4.7 strip, and
+  both the card's `h-48 object-cover` and the carousel's `h-96` would show only a sliver of
+  the very top. They are kept in case a future full-page viewer wants them — but as things
+  stand they are unused assets that git will carry forever. Delete them if that viewer is
+  not coming.
+- **Original filenames were `stanwayrealestate.com_ (1).png` through `(7)`** — spaces and
+  parentheses, which need percent-encoding in URLs and break silently when hand-edited. All
+  renamed to content-describing kebab-case (`stanway-featured-listings.webp` etc.) and
+  ordered to match the actual homepage scroll sequence, so the carousel reads top-to-bottom
+  the way a visitor would see the page.
+- **"Marketing Sites" wraps the filter row to two lines on narrow mobile.** Five buttons
+  (`All / Web Apps / Dashboards / Marketing Sites / Audits`) in a `flex-wrap` row. Expected
+  and accepted when the label was chosen, but if a sixth category is ever added the row
+  needs a rethink rather than another button.
+- **The homepage now hides three projects rather than one.** `src/app/page.tsx` still slices
+  `projects.slice(0, 4)` while the array holds seven. Featured Projects shows Gaming Portals,
+  Stanway, Safety Service Dashboard and FSY; Location Selector, Job Application Manager and
+  the ISO Audit System only appear on `/projects`. Worth deciding deliberately which four
+  lead, since that slice is now doing real editorial work.
+- **`src/app/projects/page.tsx:34` has conflicting Tailwind classes** —
+  `text-4xl font-bold text-blue-900 mb-4 dark:text-blue-300 mb-6` sets `mb-4` and `mb-6` on
+  the same element. `mb-6` wins by source order in the compiled CSS. Pre-existing, flagged by
+  the editor's Tailwind diagnostics, not touched.
 
 ## From `fix/positioning`
 

@@ -5,10 +5,15 @@ import { useState } from "react";
 import { projects } from "../data/projects";
 import ProjectCard from "../components/ProjectCard";
 
-// Extract unique categories dynamically
+// Fixed filter list — categories describe the type of work, not the client
+// relationship. "Audits" is kept in the list ahead of its first case study and
+// renders disabled while it has no entries.
 const categories: string[] = [
   "All",
-  ...(Array.from(new Set(projects.map((p) => p.category))) as string[]),
+  "Web Apps",
+  "Dashboards",
+  "Marketing Sites",
+  "Audits",
 ];
 
 export default function ProjectsPage() {
@@ -51,19 +56,28 @@ export default function ProjectsPage() {
 
       {/* Category Filters */}
       <div className="flex justify-center gap-2 mb-10 flex-wrap">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setSelectedCategory(cat)}
-            className={`px-4 py-2 rounded-full font-semibold transition-colors ${
-              selectedCategory === cat
-                ? "bg-blue-600 text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
+        {categories.map((cat) => {
+          const isEmpty =
+            cat !== "All" && !projects.some((p) => p.category === cat);
+
+          return (
+            <button
+              key={cat}
+              onClick={() => setSelectedCategory(cat)}
+              disabled={isEmpty}
+              title={isEmpty ? "No entries yet" : undefined}
+              className={`px-4 py-2 rounded-full font-semibold transition-colors ${
+                isEmpty
+                  ? "bg-gray-800 text-gray-500 border border-gray-700 cursor-not-allowed"
+                  : selectedCategory === cat
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
+            >
+              {cat}
+            </button>
+          );
+        })}
       </div>
 
       {/* Projects List */}
@@ -79,6 +93,7 @@ export default function ProjectsPage() {
               github={project.github}
               demo={project.demo}
               slug={project.slug}
+              confidential={project.confidential}
             />
           ))
         ) : (

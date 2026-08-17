@@ -35,9 +35,11 @@ export default async function ProjectDetailPage({
       </h1>
       <p className="text-gray-600 mt-2">{project.category}</p>
 
-      <div className="mt-6">
-        <ProjectCarousel images={project.image} />
-      </div>
+      {project.image.length > 0 && (
+        <div className="mt-6">
+          <ProjectCarousel images={project.image} />
+        </div>
+      )}
 
       <p className="mt-6 text-lg">{project.longDescription}</p>
 
@@ -55,38 +57,44 @@ export default async function ProjectDetailPage({
         </ul>
       </div>
 
-      <div className="mt-8 flex space-x-4">
-        {project.github && (
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
-          >
-            View on GitHub
-          </a>
-        )}
-        {project.demo && (
-          <a
-            href={project.demo}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700"
-          >
-            Live Demo
-          </a>
-        )}
-        {project.website && (
-          <a
-            href={project.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
-          >
-            Visit Website
-          </a>
-        )}
-      </div>
+      {project.confidential ? (
+        <p className="mt-8 text-sm text-gray-500 italic">
+          Client work — code and screenshots under NDA
+        </p>
+      ) : (
+        <div className="mt-8 flex space-x-4">
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
+            >
+              View on GitHub
+            </a>
+          )}
+          {project.demo && (
+            <a
+              href={project.demo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700"
+            >
+              Live Demo
+            </a>
+          )}
+          {project.website && (
+            <a
+              href={project.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
+            >
+              Visit Website
+            </a>
+          )}
+        </div>
+      )}
     </div>
   );
 }

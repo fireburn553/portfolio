@@ -49,6 +49,20 @@ export default function Footer() {
             </svg>
             <span className="sr-only">LinkedIn</span>
           </SocialLink>
+          <a
+            href="mailto:jamescharliesalva@hotmail.com"
+            className="text-gray-400 hover:text-white transition-colors"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path d="M2 6.5A2.5 2.5 0 014.5 4h15A2.5 2.5 0 0122 6.5v11a2.5 2.5 0 01-2.5 2.5h-15A2.5 2.5 0 012 17.5v-11zm2.2-.5l7.8 5.85L19.8 6H4.2zM20 8.06l-7.4 5.55a1 1 0 01-1.2 0L4 8.06v9.44c0 .28.22.5.5.5h15a.5.5 0 00.5-.5V8.06z" />
+            </svg>
+            <span className="sr-only">Email</span>
+          </a>
         </div>
         <div className="flex justify-center space-x-6 mb-8 text-gray-400">
           <Link href="/" className="hover:text-white transition-colors">

@@ -45,6 +45,7 @@ export default function Home() {
               github={project.github}
               demo={project.demo}
               slug={project.slug}
+              confidential={project.confidential}
             />
           ))}
         </div>

@@ -9,10 +9,11 @@ interface Props {
   title: string;
   description: string;
   tech: string[];
-  image: string;
+  image?: string;
   github?: string;
   demo?: string;
   slug: string;
+  confidential?: boolean;
 }
 
 export default function ProjectCard({
@@ -23,13 +24,16 @@ export default function ProjectCard({
   github,
   demo,
   slug,
+  confidential,
 }: Props) {
   const [imageError, setImageError] = useState(false);
+  // Confidential entries ship with no screenshots, so `image` can be undefined.
+  const showPlaceholder = imageError || !image;
 
   return (
     <div className="relative border border-gray-200 dark:border-gray-700 rounded-xl shadow-md dark:shadow-gray-800 overflow-hidden h-full flex flex-col group hover:shadow-xl hover:scale-105 transition-all duration-300 bg-white dark:bg-gray-800">
       <div className="overflow-hidden h-48 w-full">
-        {imageError ? (
+        {showPlaceholder ? (
           <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
             <svg
               className="w-10 h-10 text-gray-400 dark:text-gray-500"
@@ -68,25 +72,33 @@ export default function ProjectCard({
             Tech: {tech.join(", ")}
           </p>
           <div className="flex space-x-4 mt-3 relative z-10">
-            {github && (
-              <a
-                href={github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 dark:text-blue-400 underline"
-              >
-                GitHub
-              </a>
-            )}
-            {demo && (
-              <a
-                href={demo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-red-600 dark:text-red-400 underline"
-              >
-                Demo
-              </a>
+            {confidential ? (
+              <p className="text-xs text-gray-500 italic">
+                Client work — code and screenshots under NDA
+              </p>
+            ) : (
+              <>
+                {github && (
+                  <a
+                    href={github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 dark:text-blue-400 underline"
+                  >
+                    GitHub
+                  </a>
+                )}
+                {demo && (
+                  <a
+                    href={demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-red-600 dark:text-red-400 underline"
+                  >
+                    Demo
+                  </a>
+                )}
+              </>
             )}
           </div>
         </div>

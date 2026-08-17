@@ -8,12 +8,47 @@ export interface Project {
   image: string[];
   github?: string;
   demo?: string;
-  category?: "School" | "Personal" | "Volunteer";
+  category?: "Web Apps" | "Dashboards" | "Marketing Sites" | "Audits";
   status?: "Completed" | "In Progress";
   website?: string;
+  confidential?: boolean;
 }
 
 export const projects: Project[] = [
+  {
+    title: "Gaming Platform Portals — Southeast Asia",
+    slug: "gaming-platform-portals",
+    description:
+      "Twenty-plus production landing portals for a Malaysian gaming operator, serving Malaysian, Singaporean and Thai markets in four languages. Multi-language React interfaces, account and deposit flows, and third-party integrations that arrive undocumented.",
+    longDescription:
+      "Twenty-plus production landing portals for a Malaysian gaming operator, serving Malaysian, Singaporean and Thai markets in four languages. Multi-language React interfaces, account and deposit flows, and third-party integrations that arrive undocumented.",
+    tech: ["React", "TypeScript", "MUI", "Redux", "i18n", "REST"],
+    image: [],
+    category: "Web Apps",
+    confidential: true,
+  },
+  {
+    title: "Stanway Real Estate — Toronto Brokerage",
+    slug: "stanway-real-estate",
+    description:
+      "A polished, responsive brokerage site for a Central Toronto real-estate team, built to showcase property listings, highlight the team's market expertise, and generate qualified leads.",
+    longDescription:
+      "A polished, responsive real-estate brokerage site built to showcase property listings, highlight the team's market expertise, and generate qualified leads. Featuring a clean hero area, intuitive navigation, high-quality imagery, and a lead capture/contact form, it is engineered for performance and mobile optimization. On the technical side, the build emphasizes modular components, SEO-friendly markup, fast load times (image lazy-loading, minimal render blocking), and a straightforward CMS/listings integration to ensure property data stays up to date.",
+    tech: ["WordPress", "Elementor", "Estated API"],
+    image: [
+      "/projects/stanWayRealState/stanway-hero.webp",
+      "/projects/stanWayRealState/stanway-buy-sell.webp",
+      "/projects/stanWayRealState/stanway-team-testimonials.webp",
+      "/projects/stanWayRealState/stanway-newsletter-valuation.webp",
+      "/projects/stanWayRealState/stanway-featured-listings.webp",
+      "/projects/stanWayRealState/stanway-listings-grid.webp",
+      "/projects/stanWayRealState/stanway-resources-search.webp",
+      "/projects/stanWayRealState/stanway-footer-brokerage.webp",
+    ],
+    category: "Marketing Sites",
+    status: "Completed",
+    website: "https://stanwayrealestate.com/",
+  },
   {
     "title": "Safety Service Dashboard",
     "slug": "safety-service-dashboard",
@@ -22,7 +57,7 @@ export const projects: Project[] = [
     "tech": ["React", "TypeScript", "Node.js", "Express", "PostgreSQL", "JWT", "Bootstrap", "Vite", "Puppeteer"],
     "image": ["/projects/ssdashboard/ss.png", "/projects/ssdashboard/ss1.png", "/projects/ssdashboard/ss2.png", "/projects/ssdashboard/ss3.png", "/projects/ssdashboard/ss4.png", "/projects/ssdashboard/ss5.png", "/projects/ssdashboard/ss6.png", "/projects/ssdashboard/ss7.png", "/projects/ssdashboard/ss8.png", "/projects/ssdashboard/ss9.png", "/projects/ssdashboard/ss10.png", "/projects/ssdashboard/ss11.png", "/projects/ssdashboard/ss12.png", "/projects/ssdashboard/ss13.png", "/projects/ssdashboard/ss14.png", "/projects/ssdashboard/ss15.png", "/projects/ssdashboard/ss16.png", "/projects/ssdashboard/ss17.png", "/projects/ssdashboard/ss18.png", "/projects/ssdashboard/ss19.png", "/projects/ssdashboard/ss20.png"],
     "github": "https://github.com/fireburn553/ssdashboard",
-    "category": "Volunteer",
+    "category": "Dashboards",
     "status": "In Progress",
     "website": "https://ss-dashboard-two.vercel.app/"
   },
@@ -36,7 +71,7 @@ export const projects: Project[] = [
     tech: ["C#", ".NET 8", "Blazor", "SQLite"],
     image: ["/projects/fsyAttendance/fsyAttendance.png"],
     github: "https://dev.azure.com/utc11dotNetgroupOrganisation/cse325/_git/cse325",
-    category: "School",
+    category: "Web Apps",
     status: "Completed",
   },
   {
@@ -49,7 +84,7 @@ export const projects: Project[] = [
     tech: ["React", "Python"],
     image: ["/projects/locationSelector/locationSelector.png", "/projects/locationSelector/locationSelector1.png", "/projects/locationSelector/locationSelector2.png", "/projects/locationSelector/locationSelector3.png", "/projects/locationSelector/locationSelector4.png"],
     github: "https://github.com/fireburn553/psgc_frontend",
-    category: "Personal",
+    category: "Web Apps",
     status: "In Progress",
     website: "https://fireburn553.github.io/psgc_frontend/",
   },
@@ -63,7 +98,7 @@ export const projects: Project[] = [
     tech: ["React", "TypeScript", "NestJS", "PostgreSQL", "Jotai", "Passport.js"],
     image: ["/projects/jobApplications/jobApplicationManager.png"],
     github: "https://github.com/morganmallen/job-application-manager",
-    category: "School",
+    category: "Web Apps",
     status: "Completed",
     website: "https://morganmallen.github.io/job-application-manager"
   },
@@ -77,7 +112,7 @@ export const projects: Project[] = [
     tech: ["React", "Node.js", "Express", "MySQL", "Material-UI", "JWT"],
     image: ["/projects/webAuditIso/webIso.png", "/projects/webAuditIso/webIso1.png", "/projects/webAuditIso/webIso2.png", "/projects/webAuditIso/webIso3.png", "/projects/webAuditIso/webIso4.png", "/projects/webAuditIso/webIso5.png", "/projects/webAuditIso/webIso6.png", "/projects/webAuditIso/webIso7.png", "/projects/webAuditIso/webIso8.png", "/projects/webAuditIso/webIso9.png", "/projects/webAuditIso/webIso10.png", "/projects/webAuditIso/webIso11.png", "/projects/webAuditIso/webIso12.png", "/projects/webAuditIso/webIso13.png", "/projects/webAuditIso/webIso14.png"],
     github: "https://github.com/fireburn553/webauditiso",
-    category: "Personal",
+    category: "Dashboards",
     status: "Completed",
   }
 ];
