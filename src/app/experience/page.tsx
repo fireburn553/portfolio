@@ -4,7 +4,7 @@ export default function Experience() {
     <section className="py-20 max-w-4xl mx-auto">
       <h2 className="text-3xl font-bold text-blue-900 dark:text-blue-300 mb-8">Experience & Education</h2>
       <ul className="space-y-8 border-l-2 border-gray-200 dark:border-gray-700 pl-6">
-        <li>
+        <li className="relative">
           <div className="absolute w-3 h-3 bg-gray-300 rounded-full -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-600"></div>
           <h3 className="font-semibold text-lg text-gray-900 dark:text-gray-100">BYU-Idaho Online</h3>
           <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -14,7 +14,7 @@ export default function Experience() {
             Specialized in software engineering, databases, and web development.
           </p>
         </li>
-        <li>
+        <li className="relative">
           <div className="absolute w-3 h-3 bg-gray-300 rounded-full -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-600"></div>
           <h3 className="font-semibold text-lg text-gray-900 dark:text-gray-100">
             Camarines Norte State College
@@ -26,7 +26,7 @@ export default function Experience() {
             Learned programming fundamentals, networking, and system design.
           </p>
         </li>
-        <li>
+        <li className="relative">
           <div className="absolute w-3 h-3 bg-gray-300 rounded-full -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-600"></div>
           <h3 className="font-semibold text-lg text-gray-900 dark:text-gray-100">
             Red Cross Youth – Camarines Norte

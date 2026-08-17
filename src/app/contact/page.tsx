@@ -23,6 +23,7 @@ export default function Contact() {
           <a
             href="https://github.com/fireburn553"
             target="_blank"
+            rel="noopener noreferrer"
             className="text-blue-600 dark:text-blue-400 underline"
           >
             github.com/fireburn553
@@ -33,6 +34,7 @@ export default function Contact() {
           <a
             href="https://www.linkedin.com/in/jamessalva/"
             target="_blank"
+            rel="noopener noreferrer"
             className="text-blue-600 dark:text-blue-400 underline"
           >
             linkedin.com/in/jamessalva
