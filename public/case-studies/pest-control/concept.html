@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Redesign Concept — Bay Area Pest Control</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@500;600;700&family=Public+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --red: #C92A26;
+      /* 5.46:1 on white AND white-on-it. One token, both directions. */
+      --red-dk: #A81D18;
+      --ink: #14171A;
+      /* 17.99:1 */
+      --slate: #5A6068;
+      /* 6.35:1  */
+      --paper: #fff;
+      --wash: #F5F6F7;
+      --line: #E2E4E7;
+      --disp: "Barlow Condensed", sans-serif;
+      --ui: "Barlow", sans-serif;
+      --body: "Public Sans", system-ui, sans-serif;
+      --tap: 48px;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--body);
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased
+    }
+
+    img {
+      max-width: 100%;
+      display: block
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 20px
+    }
+
+    /* ── annotation system ─────────────────────────────────── */
+    .anno {
+      position: absolute;
+      z-index: 30;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--ink);
+      color: #fff;
+      border: 2px solid #fff;
+      font-family: var(--ui);
+      font-weight: 700;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: help;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .3);
+    }
+
+    .anno::after {
+      content: attr(data-note);
+      position: absolute;
+      left: 34px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 250px;
+      padding: 11px 13px;
+      background: var(--ink);
+      color: #fff;
+      border-radius: 6px;
+      font-family: var(--body);
+      font-size: 12.5px;
+      font-weight: 400;
+      line-height: 1.45;
+      text-align: left;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .15s;
+    }
+
+    .anno:hover::after,
+    .anno:focus::after {
+      opacity: 1
+    }
+
+    .anno.left::after {
+      left: auto;
+      right: 34px
+    }
+
+    body:not(.show-anno) .anno {
+      display: none
+    }
+
+    .toggle {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 200;
+      font-family: var(--ui);
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: .04em;
+      background: var(--ink);
+      color: #fff;
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 20px;
+      min-height: var(--tap);
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, .35);
+    }
+
+    .toggle:focus-visible {
+      outline: 3px solid var(--red);
+      outline-offset: 3px
+    }
+
+    .banner {
+      background: var(--ink);
+      color: #fff;
+      padding: 9px 20px;
+      text-align: center;
+      font-family: var(--ui);
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .banner b {
+      color: #FF8A85
+    }
+
+    /* ── header ────────────────────────────────────────────── */
+    .util {
+      background: var(--wash);
+      border-bottom: 1px solid var(--line);
+      font-size: 13.5px
+    }
+
+    .util .wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      min-height: 40px
+    }
+
+    .util a {
+      color: var(--slate);
+      text-decoration: none
+    }
+
+    .util a:hover {
+      color: var(--red)
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: #fff;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 12px 0;
+      position: relative
+    }
+
+    .mark {
+      font-family: var(--disp);
+      font-weight: 700;
+      font-size: 26px;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none
+    }
+
+    .mark span {
+      color: var(--red)
+    }
+
+    nav ul {
+      display: flex;
+      gap: 4px;
+      list-style: none;
+      margin: 0;
+      padding: 0
+    }
+
+    nav a {
+      display: flex;
+      align-items: center;
+      min-height: var(--tap);
+      padding: 0 13px;
+      font-family: var(--ui);
+      font-weight: 600;
+      font-size: 14.5px;
+      color: var(--ink);
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    nav a:hover {
+      background: var(--wash);
+      color: var(--red)
+    }
+
+    .callbtn {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-height: var(--tap);
+      padding: 0 20px;
+      background: var(--red);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-family: var(--ui);
+      font-weight: 700;
+      font-size: 17px;
+      white-space: nowrap;
+    }
+
+    .callbtn:hover {
+      background: var(--red-dk)
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid var(--red);
+      outline-offset: 2px;
+      border-radius: 3px;
+    }
+
+    /* ── hero ──────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      background: var(--ink)
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(100deg, rgba(10, 12, 14, .94) 0%, rgba(10, 12, 14, .86) 46%, rgba(10, 12, 14, .55) 100%),
+        linear-gradient(160deg, #3d4a3a 0%, #232a24 55%, #171a18 100%);
+    }
+
+    .hero .wrap {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 52px;
+      align-items: center;
+      padding: 60px 20px
+    }
+
+    .hero-copy {
+      color: #fff
+    }
+
+    .eyebrow {
+      font-family: var(--ui);
+      font-weight: 700;
+      font-size: 12.5px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #FF8A85;
+      margin: 0 0 14px;
+    }
+
+    .hero h1 {
+      font-family: var(--disp);
+      font-weight: 700;
+      font-size: clamp(42px, 6vw, 68px);
+      line-height: .98;
+      letter-spacing: .005em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: #FF8A85;
+      display: block
+    }
+
+    .hero p.sub {
+      font-size: 17.5px;
+      color: #D6D9DC;
+      margin: 20px 0 0;
+      max-width: 44ch
+    }
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 26px;
+      padding: 0;
+      list-style: none
+    }
+
+    .pills li {
+      font-family: var(--ui);
+      font-weight: 600;
+      font-size: 13px;
+      background: rgba(255, 255, 255, .1);
+      border: 1px solid rgba(255, 255, 255, .2);
+      padding: 7px 13px;
+      border-radius: 999px;
+      color: #fff;
+    }
+
+    /* ── form ──────────────────────────────────────────────── */
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 26px;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, .4)
+    }
+
+    .card h2 {
+      font-family: var(--disp);
+      font-weight: 700;
+      font-size: 29px;
+      text-transform: uppercase;
+      margin: 0 0 3px;
+      letter-spacing: .01em
+    }
+
+    .card .note {
+      font-size: 14px;
+      color: var(--slate);
+      margin: 0 0 20px
+    }
+
+    .field {
+      margin-bottom: 14px
+    }
+
+    .field label {
+      display: block;
+      font-family: var(--ui);
+      font-weight: 600;
+      font-size: 13.5px;
+      margin-bottom: 5px
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      min-height: var(--tap);
+      padding: 0 13px;
+      border: 1.5px solid #C9CDD2;
+      border-radius: 6px;
+      font-family: var(--body);
+      font-size: 16px;
+      color: var(--ink);
+      background: #fff;
+    }
+
+    .field input:hover,
+    .field select:hover {
+      border-color: var(--slate)
+    }
+
+    .two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px
+    }
+
+    .submit {
+      width: 100%;
+      min-height: 54px;
+      border: 0;
+      border-radius: 6px;
+      background: var(--red);
+      color: #fff;
+      cursor: pointer;
+      font-family: var(--ui);
+      font-weight: 700;
+      font-size: 17.5px;
+      letter-spacing: .02em;
+    }
+
+    .submit:hover {
+      background: var(--red-dk)
+    }
+
+    .card .fine {
+      font-size: 12.5px;
+      color: var(--slate);
+      margin: 12px 0 0;
+      line-height: 1.45
+    }
+
+    .card .fine a {
+      color: var(--red)
+    }
+
+    /* ── trust ─────────────────────────────────────────────── */
+    .trust {
+      background: var(--wash);
+      border-bottom: 1px solid var(--line);
+      position: relative
+    }
+
+    .trust .wrap {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      padding: 26px 20px;
+      text-align: center
+    }
+
+    .stat b {
+      display: block;
+      font-family: var(--disp);
+      font-weight: 700;
+      font-size: 40px;
+      line-height: 1;
+      color: var(--red)
+    }
+
+    .stat span {
+      font-family: var(--ui);
+      font-weight: 600;
+      font-size: 12.5px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--slate)
+    }
+
+    /* ── sections ──────────────────────────────────────────── */
+    section.pad {
+      padding: 64px 0;
+      position: relative
+    }
+
+    .head {
+      max-width: 60ch;
+      margin-bottom: 34px
+    }
+
+    .head h2 {
+      font-family: var(--disp);
+      font-weight: 700;
+      font-size: clamp(30px, 4vw, 42px);
+      text-transform: uppercase;
+      line-height: 1.04;
+      margin: 0 0 12px
+    }
+
+    .head p {
+      color: var(--slate);
+      font-size: 17px;
+      margin: 0
+    }
+
+    .grid3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px
+    }
+
+    .svc {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 24px;
+      background: #fff;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: border-color .15s, box-shadow .15s
+    }
+
+    .svc:hover {
+      border-color: var(--red);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, .07)
+    }
+
+    .svc h3 {
+      font-family: var(--disp);
+      font-weight: 700;
+      font-size: 23px;
+      text-transform: uppercase;
+      margin: 0 0 8px
+    }
+
+    .svc p {
+      font-size: 15px;
+      color: var(--slate);
+      margin: 0 0 14px
+    }
+
+    .svc .go {
+      font-family: var(--ui);
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--red)
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+      counter-reset: s
+    }
+
+    .step {
+      counter-increment: s
+    }
+
+    .step::before {
+      content: counter(s);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--red);
+      color: #fff;
+      font-family: var(--disp);
+      font-weight: 700;
+      font-size: 22px;
+      margin-bottom: 14px;
+    }
+
+    .step h3 {
+      font-family: var(--ui);
+      font-weight: 700;
+      font-size: 17px;
+      margin: 0 0 6px
+    }
+
+    .step p {
+      font-size: 14.5px;
+      color: var(--slate);
+      margin: 0
+    }
+
+    /* ── footer ────────────────────────────────────────────── */
+    footer {
+      background: var(--ink);
+      color: #C8CCD0;
+      padding: 48px 0 26px;
+      position: relative
+    }
+
+    .fgrid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr;
+      gap: 36px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid rgba(255, 255, 255, .13)
+    }
+
+    footer h4 {
+      font-family: var(--ui);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #fff;
+      margin: 0 0 14px
+    }
+
+    footer ul {
+      list-style: none;
+      margin: 0;
+      padding: 0
+    }
+
+    footer li {
+      margin-bottom: 5px
+    }
+
+    footer a {
+      color: #C8CCD0;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px
+    }
+
+    footer a:hover {
+      color: #FF8A85
+    }
+
+    .fcall {
+      font-family: var(--disp);
+      font-weight: 700;
+      font-size: 33px;
+      color: #fff;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 5px
+    }
+
+    .legal {
+      padding-top: 20px;
+      font-size: 12.5px;
+      color: #8B9299;
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap
+    }
+
+    .legal a {
+      color: #8B9299;
+      min-height: auto
+    }
+
+    @media (max-width:940px) {
+      .hero .wrap {
+        grid-template-columns: 1fr;
+        gap: 34px;
+        padding: 44px 20px
+      }
+
+      .grid3,
+      .steps {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .fgrid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      nav {
+        display: none
+      }
+    }
+
+    @media (max-width:600px) {
+      .trust .wrap {
+        grid-template-columns: 1fr 1fr;
+        gap: 22px
+      }
+
+      .grid3,
+      .steps,
+      .two,
+      .fgrid {
+        grid-template-columns: 1fr
+      }
+
+      .util .wrap {
+        justify-content: center;
+        font-size: 13px
+      }
+
+      .anno::after {
+        width: 190px
+      }
+    }
+  </style>
+</head>
+
+<body class="show-anno">
+
+  <div class="banner">Anonymised redesign concept · <b>not affiliated with the audited business</b> · logo and name
+    replaced</div>
+
+  <!-- ═══ UTILITY ═══ -->
+  <div class="util">
+    <div class="wrap">
+      <span>Mon–Fri 8:00 AM – 7:00 PM · Sat 8:00 AM – 5:00 PM</span>
+      <span><a href="#">Existing customer? Sign in →</a></span>
+    </div>
+  </div>
+
+  <!-- ═══ HEADER ═══ -->
+  <header>
+    <div class="wrap">
+      <div class="bar">
+        <a class="mark" href="#">North<span>point</span> Pest</a>
+        <nav>
+          <ul>
+            <li><a href="#">Residential</a></li>
+            <li><a href="#">Commercial</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">Service Areas</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </nav>
+        <a class="callbtn" href="tel:6509101561">(650) 910-1561</a>
+
+        <div class="anno left" style="right:0;top:-9px" tabindex="0"
+          data-note="ONE phone number. The audit found four different numbers published across the site, all live as tel: links, with no documented mapping.">
+          1</div>
+        <div class="anno" style="left:52%;top:-9px" tabindex="0"
+          data-note="Contact restored to the nav. The original had no Contact item in the main nav OR the footer nav — the contact page was reachable only from two in-body buttons.">
+          2</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ HERO ═══ -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">Licensed · Bonded · Bay Area since 2009</p>
+        <h1>Pest control<em>specialists</em></h1>
+        <p class="sub">Same-week service across seven Bay Area locations. Eco-friendly treatments, and a technician who
+          tells you exactly what they found.</p>
+        <ul class="pills">
+          <li>Free inspection</li>
+          <li>No long-term contract</li>
+          <li>Pet &amp; child safe options</li>
+        </ul>
+
+        <div class="anno" style="left:0;top:-14px" tabindex="0"
+          data-note="Solid scrim over the photo. Original hero headline measured 1.39:1 against sampled image pixels — and 1.11:1 on the commercial page, the worst value on the site.">
+          3</div>
+        <div class="anno" style="left:150px;top:52px" tabindex="0"
+          data-note="One H1 carrying the full phrase. Original split it: H1 was 'PEST CONTROL' (two words), 'SPECIALISTS' was a separate H2. Four more H2s contained only the numerals 1–4.">
+          4</div>
+      </div>
+
+      <div class="card">
+        <h2>Get a free inspection</h2>
+        <p class="note">Most requests answered within 2 business hours.</p>
+        <div class="two">
+          <div class="field"><label for="fn">First name</label><input id="fn" type="text" autocomplete="given-name">
+          </div>
+          <div class="field"><label for="ln">Last name</label><input id="ln" type="text" autocomplete="family-name">
+          </div>
+        </div>
+        <div class="field"><label for="ph">Phone</label><input id="ph" type="tel" autocomplete="tel"
+            placeholder="(650) 555-0100"></div>
+        <div class="field"><label for="zp">ZIP code</label><input id="zp" type="text" inputmode="numeric"
+            autocomplete="postal-code"></div>
+        <div class="field"><label for="pt">What are you dealing with?</label>
+          <select id="pt">
+            <option>Not sure — please inspect</option>
+            <option>Ants</option>
+            <option>Cockroaches</option>
+            <option>Rodents</option>
+            <option>Termites / WDO</option>
+            <option>Bed bugs</option>
+            <option>Spiders</option>
+            <option>Mosquitoes</option>
+            <option>Something else</option>
+          </select>
+        </div>
+        <button class="submit" type="button">Request my free inspection</button>
+        <p class="fine">By submitting you agree to our <a href="#">SMS &amp; call terms</a> and <a href="#">privacy
+            policy</a>. Message rates may apply.</p>
+
+        <div class="anno left" style="right:10px;top:-13px" tabindex="0"
+          data-note="Form moved above the fold. The original lead form began at y5256 on a 7189px homepage — 73% of the way down.">
+          5</div>
+        <div class="anno left" style="right:10px;top:214px" tabindex="0"
+          data-note="Five fields, one required action. Original form had 22 visible fields, 6 required — including a required open-text textarea and a field labelled 'First do Last' with an unlabelled input beside it, live in production.">
+          6</div>
+        <div class="anno left" style="right:10px;bottom:16px" tabindex="0"
+          data-note="Consent terms linked. Original collected SMS/call marketing consent while /sms-call-terms-conditions/ and /privacy-policy/ were linked from no page checked.">
+          7</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TRUST ═══ -->
+  <div class="trust">
+    <div class="wrap">
+      <div class="stat"><b>4.9</b><span>Average rating</span></div>
+      <div class="stat"><b>2,613</b><span>Verified reviews</span></div>
+      <div class="stat"><b>7</b><span>Bay Area offices</span></div>
+      <div class="stat"><b>30</b><span>Licensed techs</span></div>
+      <div class="anno" style="left:12px;top:-13px" tabindex="0"
+        data-note="Real numbers, rendered in the HTML. The original animated these from 0 on scroll — crawlers, link previews and reduced-motion users saw '0 Branches / 0 Technicians / 0+ Reviews'. Review count also appeared as 2,500+, 2,600+, 3,000+ and 2,613 in four places.">
+        8</div>
+    </div>
+  </div>
+
+  <!-- ═══ SERVICES ═══ -->
+  <section class="pad">
+    <div class="wrap">
+      <div class="head">
+        <h2>What we treat</h2>
+        <p>Every service starts with a free inspection and a written finding — you see what we found before you agree to
+          anything.</p>
+      </div>
+      <div class="grid3">
+        <a class="svc" href="#">
+          <h3>Termites &amp; WDO</h3>
+          <p>Inspection reports for escrow, treatment and repair referrals across all seven service areas.</p><span
+            class="go">See termite services →</span>
+        </a>
+        <a class="svc" href="#">
+          <h3>Rodents</h3>
+          <p>Exclusion-first: we find the entry point and seal it, rather than baiting indefinitely.</p><span
+            class="go">See rodent control →</span>
+        </a>
+        <a class="svc" href="#">
+          <h3>Ants &amp; roaches</h3>
+          <p>Targeted interior and perimeter treatment with pet-safe and organic options.</p><span class="go">See
+            general pest →</span>
+        </a>
+      </div>
+      <div class="anno" style="left:0;top:44px" tabindex="0"
+        data-note="Termites promoted to first. In the original nav, Termite Control sat last in the residential dropdown — below Silverfish and Fleas — despite WDO inspections being the highest-ticket residential service.">
+        9</div>
+    </div>
+  </section>
+
+  <!-- ═══ PROCESS ═══ -->
+  <section class="pad" style="background:var(--wash)">
+    <div class="wrap">
+      <div class="head">
+        <h2>How it works</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <h3>Tell us what you're seeing</h3>
+          <p>Two minutes. No account, no call required first.</p>
+        </div>
+        <div class="step">
+          <h3>Free inspection</h3>
+          <p>A licensed technician confirms the species and the entry points.</p>
+        </div>
+        <div class="step">
+          <h3>Written quote</h3>
+          <p>Fixed price, itemised. $100 off your first service on any recurring plan.</p>
+        </div>
+        <div class="step">
+          <h3>Treatment</h3>
+          <p>Usually same week. You get a written report of what was done.</p>
+        </div>
+      </div>
+      <div class="anno" style="left:0;top:44px" tabindex="0"
+        data-note="One offer, stated once. The original showed '$200 off' in the sticky promo bar and '$100 off' twice in the body — simultaneously, on the same rendered page.">
+        10</div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="wrap">
+      <div class="fgrid">
+        <div>
+          <h4>Talk to us</h4>
+          <a class="fcall" href="tel:6509101561">(650) 910-1561</a>
+          <p style="margin:0 0 10px;font-size:14.5px">Mon–Fri 8:00 AM – 7:00 PM · Sat 8:00 AM – 5:00 PM</p>
+          <ul>
+            <li><a href="mailto:sales@example.com">New customers — sales@</a></li>
+            <li><a href="mailto:service@example.com">Existing customers — service@</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#">Termites &amp; WDO</a></li>
+            <li><a href="#">Rodent control</a></li>
+            <li><a href="#">Ants</a></li>
+            <li><a href="#">Cockroaches</a></li>
+            <li><a href="#">Bed bugs</a></li>
+            <li><a href="#">Commercial</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Service areas</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">Reviews</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="legal">
+        <span>© 2026 Northpoint Pest — anonymised concept</span>
+        <a href="#">Privacy policy</a><a href="#">SMS &amp; call terms</a><a href="#">Sitemap</a>
+      </div>
+      <div class="anno" style="left:12px;top:16px" tabindex="0"
+        data-note="Privacy policy and SMS terms linked from the footer. Both pages existed on the original but were orphaned — zero inbound links, while forms collected marketing consent.">
+        11</div>
+    </div>
+  </footer>
+
+  <button class="toggle" id="t" aria-pressed="true">Hide findings</button>
+  <script>
+    var b = document.body, t = document.getElementById('t');
+    t.addEventListener('click', function () {
+      var on = b.classList.toggle('show-anno');
+      t.textContent = on ? 'Hide findings' : 'Show findings (11)';
+      t.setAttribute('aria-pressed', String(on));
+    });
+  </script>
+</body>
+
+</html>

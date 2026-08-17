@@ -72,6 +72,12 @@ export default function Footer() {
             Projects
           </Link>
           <Link
+            href="/case-studies"
+            className="hover:text-white transition-colors"
+          >
+            Case Studies
+          </Link>
+          <Link
             href="/experience"
             className="hover:text-white transition-colors"
           >

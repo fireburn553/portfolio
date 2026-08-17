@@ -1,8 +1,10 @@
 // src/app/page.tsx
 import Hero from "./components/Hero";
 import ProjectCard from "./components/ProjectCard";
+import CaseStudyCard from "./components/CaseStudyCard";
 import Skills from "./components/Skills";
 import { projects } from "./data/projects";
+import { caseStudies } from "./data/caseStudies";
 import Link from "next/link";
 export default function Home() {
   const featured = projects.slice(0, 4); // first 4 projects
@@ -24,6 +26,34 @@ export default function Home() {
           the scope is based on findings rather than assumptions. You get that report
           whether or not the project goes ahead.
         </p>
+      </section>
+
+      {/* Audits & case studies */}
+      <section className="py-16" id="case-studies">
+        <h2 className="text-3xl font-bold text-blue-300 mb-6">
+          Audits &amp; case studies
+        </h2>
+        <div className="grid md:grid-cols-2 gap-6">
+          {caseStudies.map((study) => (
+            <CaseStudyCard
+              key={study.slug}
+              slug={study.slug}
+              title={study.title}
+              sector={study.sector}
+              summary={study.summary}
+              engagement={study.engagement}
+            />
+          ))}
+        </div>
+
+        <div className="text-center mt-8">
+          <Link
+            href="/case-studies"
+            className="px-6 py-3 bg-blue-900 text-white rounded-lg shadow hover:bg-blue-800"
+          >
+            View all case studies
+          </Link>
+        </div>
       </section>
 
       {/* Skills Section */}

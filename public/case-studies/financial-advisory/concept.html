@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Redesign Concept — Philippine Financial Advisory Firm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0F2A47;
+            /* 14.56:1 both directions */
+            --blue: #0075C9;
+            /* 4.79:1 — kept from the original, it already passed */
+            --amber: #B85100;
+            /* 4.98:1 on white AND white-on-it. Replaces #E87200 at 3.07:1 */
+            --amber-lt: #FFA45C;
+            /* 7.43:1 on navy — for dark surfaces only */
+            --ink: #14181D;
+            --slate: #586170;
+            --paper: #fff;
+            --wash: #F4F6F8;
+            --line: #DDE2E8;
+            --disp: "Fraunces", Georgia, serif;
+            --ui: "Source Sans 3", system-ui, sans-serif;
+            --tap: 48px;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: var(--ui);
+            font-size: 17px;
+            color: var(--ink);
+            background: #fff;
+            line-height: 1.62;
+            -webkit-font-smoothing: antialiased
+        }
+
+        img {
+            max-width: 100%;
+            display: block
+        }
+
+        .wrap {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 0 20px
+        }
+
+        /* ── annotations ───────────────────────────────────────── */
+        .anno {
+            position: absolute;
+            z-index: 30;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--ink);
+            color: #fff;
+            border: 2px solid #fff;
+            font-family: var(--ui);
+            font-weight: 700;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: help;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .3);
+        }
+
+        .anno::after {
+            content: attr(data-note);
+            position: absolute;
+            left: 34px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 255px;
+            padding: 11px 13px;
+            background: var(--ink);
+            color: #fff;
+            border-radius: 6px;
+            font-family: var(--ui);
+            font-size: 12.5px;
+            font-weight: 400;
+            line-height: 1.45;
+            text-align: left;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .15s;
+        }
+
+        .anno:hover::after,
+        .anno:focus::after {
+            opacity: 1
+        }
+
+        .anno.left::after {
+            left: auto;
+            right: 34px
+        }
+
+        body:not(.show-anno) .anno {
+            display: none
+        }
+
+        .toggle {
+            position: fixed;
+            right: 16px;
+            bottom: 16px;
+            z-index: 200;
+            font-family: var(--ui);
+            font-weight: 600;
+            font-size: 13.5px;
+            background: var(--ink);
+            color: #fff;
+            border: 0;
+            border-radius: 999px;
+            padding: 13px 20px;
+            min-height: var(--tap);
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, .35);
+        }
+
+        .toggle:focus-visible {
+            outline: 3px solid var(--amber);
+            outline-offset: 3px
+        }
+
+        .banner {
+            background: var(--ink);
+            color: #fff;
+            padding: 9px 20px;
+            text-align: center;
+            font-size: 12px;
+            letter-spacing: .07em;
+            text-transform: uppercase
+        }
+
+        .banner b {
+            color: var(--amber-lt)
+        }
+
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible,
+        textarea:focus-visible {
+            outline: 3px solid var(--amber);
+            outline-offset: 2px;
+            border-radius: 3px;
+        }
+
+        /* ── header ────────────────────────────────────────────── */
+        .util {
+            background: var(--navy);
+            color: #C6D2E0;
+            font-size: 13.5px;
+            position: relative
+        }
+
+        .util .wrap {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+            min-height: 40px
+        }
+
+        .util a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600
+        }
+
+        .util a:hover {
+            color: var(--amber-lt)
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: #fff;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 22px;
+            padding: 13px 0;
+            position: relative
+        }
+
+        .mark {
+            font-family: var(--disp);
+            font-weight: 700;
+            font-size: 25px;
+            letter-spacing: -.01em;
+            color: var(--navy);
+            text-decoration: none
+        }
+
+        .mark span {
+            color: var(--amber)
+        }
+
+        nav ul {
+            display: flex;
+            gap: 2px;
+            list-style: none;
+            margin: 0;
+            padding: 0
+        }
+
+        nav a {
+            display: flex;
+            align-items: center;
+            min-height: var(--tap);
+            padding: 0 12px;
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--navy);
+            text-decoration: none;
+            border-radius: 5px
+        }
+
+        nav a:hover {
+            background: var(--wash);
+            color: var(--amber)
+        }
+
+        .cta {
+            display: flex;
+            align-items: center;
+            min-height: var(--tap);
+            padding: 0 20px;
+            background: var(--amber);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 15.5px;
+            white-space: nowrap
+        }
+
+        .cta:hover {
+            background: #98420A
+        }
+
+        /* ── hero ──────────────────────────────────────────────── */
+        .hero {
+            position: relative;
+            background: var(--navy);
+            color: #fff
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(95deg, rgba(9, 22, 38, .93) 0%, rgba(9, 22, 38, .80) 55%, rgba(9, 22, 38, .62) 100%),
+                linear-gradient(150deg, #1d4470 0%, #12304f 60%, #0b1e33 100%);
+        }
+
+        .hero .wrap {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 52px;
+            align-items: center;
+            padding: 66px 20px
+        }
+
+        .eyebrow {
+            font-weight: 700;
+            font-size: 12.5px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--amber-lt);
+            margin: 0 0 16px
+        }
+
+        .hero h1 {
+            font-family: var(--disp);
+            font-weight: 600;
+            font-size: clamp(36px, 4.9vw, 56px);
+            line-height: 1.08;
+            letter-spacing: -.015em;
+            margin: 0
+        }
+
+        .hero p.sub {
+            font-size: 18.5px;
+            color: #CBD6E3;
+            margin: 20px 0 0;
+            max-width: 46ch
+        }
+
+        .creds {
+            list-style: none;
+            margin: 28px 0 0;
+            padding: 0;
+            display: grid;
+            gap: 9px
+        }
+
+        .creds li {
+            padding-left: 26px;
+            position: relative;
+            font-size: 15.5px;
+            color: #E3EAF2
+        }
+
+        .creds li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 9px;
+            width: 11px;
+            height: 11px;
+            border-radius: 2px;
+            background: var(--amber-lt)
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 27px;
+            box-shadow: 0 20px 54px rgba(0, 0, 0, .4);
+            color: var(--ink)
+        }
+
+        .card h2 {
+            font-family: var(--disp);
+            font-weight: 600;
+            font-size: 26px;
+            margin: 0 0 3px;
+            color: var(--navy)
+        }
+
+        .card .note {
+            font-size: 14.5px;
+            color: var(--slate);
+            margin: 0 0 20px
+        }
+
+        .field {
+            margin-bottom: 14px
+        }
+
+        .field label {
+            display: block;
+            font-weight: 600;
+            font-size: 13.5px;
+            margin-bottom: 5px
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+            min-height: var(--tap);
+            padding: 0 13px;
+            border: 1.5px solid #C4CBD4;
+            border-radius: 5px;
+            font-family: var(--ui);
+            font-size: 16px;
+            background: #fff;
+            color: var(--ink)
+        }
+
+        .field input:hover,
+        .field select:hover {
+            border-color: var(--slate)
+        }
+
+        .submit {
+            width: 100%;
+            min-height: 54px;
+            border: 0;
+            border-radius: 5px;
+            background: var(--amber);
+            color: #fff;
+            cursor: pointer;
+            font-family: var(--ui);
+            font-weight: 700;
+            font-size: 17px
+        }
+
+        .submit:hover {
+            background: #98420A
+        }
+
+        .card .fine {
+            font-size: 12.5px;
+            color: var(--slate);
+            margin: 12px 0 0;
+            line-height: 1.45
+        }
+
+        /* ── logo wall ─────────────────────────────────────────── */
+        .logos {
+            background: var(--wash);
+            border-bottom: 1px solid var(--line);
+            position: relative
+        }
+
+        .logos .wrap {
+            padding: 30px 20px
+        }
+
+        .logos p {
+            margin: 0 0 16px;
+            font-size: 12.5px;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--slate);
+            text-align: center
+        }
+
+        .logo-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center
+        }
+
+        .logo-chip {
+            font-family: var(--disp);
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--navy);
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 5px;
+            padding: 9px 16px
+        }
+
+        /* ── sections ──────────────────────────────────────────── */
+        section.pad {
+            padding: 66px 0;
+            position: relative
+        }
+
+        .head {
+            max-width: 62ch;
+            margin-bottom: 34px
+        }
+
+        .head h2 {
+            font-family: var(--disp);
+            font-weight: 600;
+            font-size: clamp(28px, 3.6vw, 40px);
+            line-height: 1.1;
+            letter-spacing: -.015em;
+            margin: 0 0 12px;
+            color: var(--navy)
+        }
+
+        .head p {
+            color: var(--slate);
+            font-size: 17.5px;
+            margin: 0
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px
+        }
+
+        .panel {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 30px;
+            background: #fff
+        }
+
+        .panel .tag {
+            display: inline-block;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--amber);
+            margin-bottom: 12px
+        }
+
+        .panel h3 {
+            font-family: var(--disp);
+            font-weight: 600;
+            font-size: 25px;
+            margin: 0 0 10px;
+            color: var(--navy)
+        }
+
+        .panel p {
+            font-size: 16px;
+            color: var(--slate);
+            margin: 0 0 16px
+        }
+
+        .panel ul {
+            margin: 0 0 20px;
+            padding-left: 19px;
+            font-size: 15.5px;
+            color: var(--slate)
+        }
+
+        .panel li {
+            margin-bottom: 6px
+        }
+
+        .panel a.go {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--amber);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            min-height: 40px
+        }
+
+        .panel a.go:hover {
+            text-decoration: underline
+        }
+
+        /* ── quote ─────────────────────────────────────────────── */
+        .quotes {
+            background: var(--navy);
+            color: #fff
+        }
+
+        .quotes .wrap {
+            padding: 60px 20px
+        }
+
+        .quotes h2 {
+            font-family: var(--disp);
+            font-weight: 600;
+            font-size: clamp(26px, 3.2vw, 34px);
+            margin: 0 0 30px;
+            color: #fff
+        }
+
+        .qgrid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px
+        }
+
+        .q {
+            background: rgba(255, 255, 255, .07);
+            border: 1px solid rgba(255, 255, 255, .16);
+            border-radius: 9px;
+            padding: 24px
+        }
+
+        .q blockquote {
+            margin: 0 0 14px;
+            font-size: 16px;
+            line-height: 1.55;
+            color: #E3EAF2
+        }
+
+        .q cite {
+            font-style: normal;
+            font-size: 13.5px;
+            color: var(--amber-lt);
+            font-weight: 600
+        }
+
+        /* ── media ─────────────────────────────────────────────── */
+        .media {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px
+        }
+
+        .mcard {
+            border: 1px solid var(--line);
+            border-radius: 9px;
+            overflow: hidden;
+            background: #fff
+        }
+
+        .mthumb {
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, #1d4470, #0b1e33);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-family: var(--disp);
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: .05em
+        }
+
+        .mbody {
+            padding: 17px
+        }
+
+        .mbody .when {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--amber);
+            margin: 0 0 6px
+        }
+
+        .mbody h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0;
+            line-height: 1.4;
+            color: var(--navy)
+        }
+
+        /* ── footer ────────────────────────────────────────────── */
+        footer {
+            background: var(--ink);
+            color: #B9C2CE;
+            padding: 52px 0 26px;
+            position: relative;
+            font-size: 15px
+        }
+
+        .fgrid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1fr;
+            gap: 38px;
+            padding-bottom: 28px;
+            border-bottom: 1px solid rgba(255, 255, 255, .13)
+        }
+
+        footer h4 {
+            font-size: 12.5px;
+            font-weight: 700;
+            letter-spacing: .11em;
+            text-transform: uppercase;
+            color: #fff;
+            margin: 0 0 14px;
+            font-family: var(--ui)
+        }
+
+        footer ul {
+            list-style: none;
+            margin: 0;
+            padding: 0
+        }
+
+        footer a {
+            color: #B9C2CE;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            min-height: 38px
+        }
+
+        footer a:hover {
+            color: var(--amber-lt)
+        }
+
+        .fcall {
+            font-family: var(--disp);
+            font-weight: 600;
+            font-size: 27px;
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 4px;
+            min-height: auto
+        }
+
+        .reg {
+            margin-top: 16px;
+            font-size: 12.5px;
+            color: #7E8896;
+            line-height: 1.5;
+            max-width: 44ch
+        }
+
+        .legal {
+            padding-top: 20px;
+            font-size: 12.5px;
+            color: #7E8896;
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap
+        }
+
+        .legal a {
+            color: #7E8896;
+            min-height: auto
+        }
+
+        @media (max-width:940px) {
+            .hero .wrap {
+                grid-template-columns: 1fr;
+                gap: 34px;
+                padding: 46px 20px
+            }
+
+            .two-col,
+            .qgrid,
+            .media,
+            .fgrid {
+                grid-template-columns: 1fr
+            }
+
+            nav {
+                display: none
+            }
+        }
+
+        @media (max-width:600px) {
+            .anno::after {
+                width: 190px
+            }
+
+            .util .wrap {
+                justify-content: center
+            }
+        }
+    </style>
+</head>
+
+<body class="show-anno">
+
+    <div class="banner">Anonymised redesign concept · <b>not affiliated with the audited business</b> · name, logo and
+        client marks replaced</div>
+
+    <div class="util">
+        <div class="wrap">
+            <span>SEC-registered investment advisory · Metro Manila</span>
+            <span><a href="tel:+639666642690">+63 966 664 2690</a> · <a
+                    href="mailto:invest@example.com">invest@example.com</a></span>
+            <div class="anno left" style="right:2px;top:6px" tabindex="0"
+                data-note="Phone and email rendered as real text. On the original the number existed only inside AIOSEO's Organization JSON-LD — Google could read it, a human could not. Zero tel: links site-wide, and the one email on /careers/ rendered as the literal string [email protected].">
+                3</div>
+        </div>
+    </div>
+
+    <header>
+        <div class="wrap">
+            <div class="bar">
+                <a class="mark" href="#">Meridian<span>&thinsp;Capital</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="#">For Companies</a></li>
+                        <li><a href="#">For Individuals</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Insights</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </nav>
+                <a class="cta" href="#book">Book a consultation</a>
+
+                <div class="anno" style="left:200px;top:-11px" tabindex="0"
+                    data-note="Nav reordered by revenue. Original ranked Testimonials 3rd — above For Companies, the only page carrying a complete funnel argument — and put Careers (6) above Contact Us (7).">
+                    1</div>
+                <div class="anno left" style="right:2px;top:-11px" tabindex="0"
+                    data-note="One CTA label, one destination, on-site. Original had five different labels — 'Apply for a Discovery Call', 'Connect With Experts', 'Invest With Us', 'Learn More', 'Begin Today' — all pointing at the same external JotForm, in three different visual styles.">
+                    2</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══ HERO ═══ -->
+    <div class="hero">
+        <div class="hero-bg"></div>
+        <div class="wrap">
+            <div>
+                <p class="eyebrow">Corporate financial wellness · Investment advisory</p>
+                <h1>Your people make better financial decisions when someone qualified explains the options.</h1>
+                <p class="sub">We run financial education programmes for Philippine companies, and independent advisory
+                    for individuals — from a team that has managed institutional money at the largest banks in the
+                    country.</p>
+                <ul class="creds">
+                    <li>CFA charterholder and SEC-licensed Certified Investment Solicitor on staff</li>
+                    <li>Former Chief Investment Officer, one of the Philippines' largest banks</li>
+                    <li>Founding president, Fund Managers Association of the Philippines</li>
+                    <li>Programme director, Ateneo Financial Markets Certification</li>
+                </ul>
+
+                <div class="anno" style="left:-8px;top:78px" tabindex="0"
+                    data-note="Scrim raised to a passing level. Original homepage cover 2 used #000 at 10% opacity: 72% of sampled points behind the body copy fell below 4.5:1, worst 2.80:1. Cover 3 on the same page already used 50% and passed everywhere — a one-setting fix.">
+                    4</div>
+                <div class="anno" style="left:-8px;top:270px" tabindex="0"
+                    data-note="Credentials promoted to the hero. These are the strongest, most checkable assets the firm owns, and on the original they sat unused on an About page that ranked 2nd in the nav.">
+                    5</div>
+            </div>
+
+            <div class="card" id="book">
+                <h2>Book a consultation</h2>
+                <p class="note">Thirty minutes, no cost. We'll tell you whether we're the right fit.</p>
+                <div class="field"><label for="nm">Full name</label><input id="nm" type="text" autocomplete="name">
+                </div>
+                <div class="field"><label for="em">Work email</label><input id="em" type="email" autocomplete="email">
+                </div>
+                <div class="field"><label for="tel">Mobile</label><input id="tel" type="tel" autocomplete="tel"
+                        placeholder="+63"></div>
+                <div class="field"><label for="ty">I'm enquiring as</label>
+                    <select id="ty">
+                        <option>A company — employee financial wellness</option>
+                        <option>An individual — investment advisory</option>
+                        <option>A partner or media enquiry</option>
+                    </select>
+                </div>
+                <button class="submit" type="button">Request my consultation</button>
+                <p class="fine">Submitted on this site — no redirect. Your enquiry reaches us directly.</p>
+
+                <div class="anno left" style="right:10px;top:-12px" tabindex="0"
+                    data-note="Form brought on-site. All five original CTAs handed visitors to jotform.com, a domain absent from GA4's cross-domain linker, with no click events and nothing in dataLayer. The primary conversion path produced no attributable data at all.">
+                    6</div>
+                <div class="anno left" style="right:10px;bottom:16px" tabindex="0"
+                    data-note="Four homepage buttons still carried rel=&quot;https://calendly.com/... noopener noreferrer noopener&quot; — a URL in a rel attribute, with noopener duplicated. The fingerprint of a find-and-replace that swapped href from Calendly to JotForm and missed the rel.">
+                    7</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ LOGOS ═══ -->
+    <div class="logos">
+        <div class="wrap">
+            <p>Programmes delivered for</p>
+            <div class="logo-row">
+                <span class="logo-chip">Universal Bank</span><span class="logo-chip">Global Insurer</span>
+                <span class="logo-chip">Energy Major</span><span class="logo-chip">Digital Wallet</span>
+                <span class="logo-chip">Retail Group</span><span class="logo-chip">Central Bank</span>
+                <span class="logo-chip">Life Insurer</span><span class="logo-chip">University</span>
+            </div>
+            <div class="anno" style="left:12px;top:22px" tabindex="0"
+                data-note="Twenty-five real client and partner logos existed on the original — but buried on /for-companies/, a page ranked 4th in the nav that had not been edited since November 2022. Marks replaced here with generic labels for anonymity.">
+                8</div>
+        </div>
+    </div>
+
+    <!-- ═══ SERVICES ═══ -->
+    <section class="pad">
+        <div class="wrap">
+            <div class="head">
+                <h2>Two ways we work</h2>
+                <p>Written as real text, structured as real headings — so it can be read by a search engine, a screen
+                    reader, and a phone.</p>
+            </div>
+            <div class="two-col">
+                <div class="panel">
+                    <span class="tag">For companies</span>
+                    <h3>Employee financial wellness programmes</h3>
+                    <p>Workshops and clinics delivered on site or remotely, sized from a single team to several hundred
+                        participants.</p>
+                    <ul>
+                        <li>Financial quotient workshops — 600+ participants delivered</li>
+                        <li>Retirement and benefits education</li>
+                        <li>One-to-one clinics for senior staff</li>
+                        <li>Post-programme reporting for HR</li>
+                    </ul>
+                    <a class="go" href="#book">Discuss a programme →</a>
+                </div>
+                <div class="panel">
+                    <span class="tag">For individuals</span>
+                    <h3>Independent investment advisory</h3>
+                    <p>Fee-based advice from licensed practitioners, with no product quota and no tied distribution.</p>
+                    <ul>
+                        <li>Portfolio review and asset allocation</li>
+                        <li>Fund selection across local and offshore markets</li>
+                        <li>Retirement and education planning</li>
+                        <li>Ongoing review, quarterly</li>
+                    </ul>
+                    <a class="go" href="#book">Book a consultation →</a>
+                </div>
+            </div>
+            <div class="anno" style="left:0;top:48px" tabindex="0"
+                data-note="Section content set as live text. On the original /for-companies/, every section title was baked into a Keynote-exported PNG: one real heading for a 9,216px page, 196 words total, and 20 images carrying alt=&quot;Image&quot;.">
+                9</div>
+        </div>
+    </section>
+
+    <!-- ═══ TESTIMONIALS ═══ -->
+    <div class="quotes">
+        <div class="wrap">
+            <h2>What participants say</h2>
+            <div class="qgrid">
+                <div class="q">
+                    <blockquote>"The first session where someone explained fund fees without trying to sell me a fund."
+                    </blockquote><cite>Programme participant · Universal Bank</cite>
+                </div>
+                <div class="q">
+                    <blockquote>"Our people asked more questions in ninety minutes than in three years of benefits
+                        briefings."</blockquote><cite>HR Director · Retail Group</cite>
+                </div>
+                <div class="q">
+                    <blockquote>"Practical, specific, and grounded in the Philippine market rather than imported
+                        material."</blockquote><cite>Programme participant · Energy Major</cite>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ MEDIA ═══ -->
+    <section class="pad">
+        <div class="wrap">
+            <div class="head">
+                <h2>In the media</h2>
+                <p>Every item dated, so a reader knows what they're looking at.</p>
+            </div>
+            <div class="media">
+                <div class="mcard">
+                    <div class="mthumb">BROADCAST</div>
+                    <div class="mbody">
+                        <p class="when">Business news · Aug 2022</p>
+                        <h3>Peso outlook and what it means for peso-denominated funds</h3>
+                    </div>
+                </div>
+                <div class="mcard">
+                    <div class="mthumb">BROADCAST</div>
+                    <div class="mbody">
+                        <p class="when">Business news · Jun 2022</p>
+                        <h3>Reading the index during a low-volume month</h3>
+                    </div>
+                </div>
+                <div class="mcard">
+                    <div class="mthumb">EXPLAINER</div>
+                    <div class="mbody">
+                        <p class="when">Evergreen</p>
+                        <h3>What stocks are, and why starting early matters more than starting big</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="anno" style="left:0;top:48px" tabindex="0"
+                data-note="Dates and context added. The original embedded five 2021–2022 market segments with no dates — including one titled 'PSEi closes flat at 6,312' and another on '2022 IPOs' — plus a live TikTok feed permanently showing September 2023 content behind a free-plan badge.">
+                10</div>
+        </div>
+    </section>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer>
+        <div class="wrap">
+            <div class="fgrid">
+                <div>
+                    <h4>Talk to us</h4>
+                    <a class="fcall" href="tel:+639666642690">+63 966 664 2690</a>
+                    <ul>
+                        <li><a href="mailto:invest@example.com">invest@example.com</a></li>
+                    </ul>
+                    <p class="reg">Meridian Capital Advisory Inc. · Registered with the Securities and Exchange
+                        Commission · Investment solicitation conducted by SEC-licensed Certified Investment Solicitors.
+                        Past performance does not guarantee future results.</p>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#">For companies</a></li>
+                        <li><a href="#">For individuals</a></li>
+                        <li><a href="#">Workshops</a></li>
+                        <li><a href="#">Advisory</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Insights</a></li>
+                        <li><a href="#">Testimonials</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="legal">
+                <span>© 2026 Meridian Capital — anonymised concept</span>
+                <a href="#">Privacy</a><a href="#">Terms</a>
+            </div>
+            <div class="anno" style="left:12px;top:18px" tabindex="0"
+                data-note="Footer given contact details and a regulatory line. The original footer contained three social icons and nothing else — no phone, no email, no address, no registration statement, on a site whose About page cites SEC licensing as its principal credential.">
+                11</div>
+        </div>
+    </footer>
+
+    <button class="toggle" id="t" aria-pressed="true">Hide findings</button>
+    <script>
+        var b = document.body, t = document.getElementById('t');
+        t.addEventListener('click', function () {
+            var on = b.classList.toggle('show-anno');
+            t.textContent = on ? 'Hide findings' : 'Show findings (11)';
+            t.setAttribute('aria-pressed', String(on));
+        });
+    </script>
+</body>
+
+</html>

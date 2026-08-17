@@ -1,11 +1,15 @@
 # NOTES
 
 Things noticed while doing the six tasks on `fix/critical`, the five on
-`fix/positioning` and the four on `feat/conversion`. **Nothing here was fixed** —
-recorded only, per instructions.
+`fix/positioning`, the four on `feat/conversion` and the four on `feat/case-studies`.
+**Nothing here was fixed** — recorded only, per instructions.
 
 ## Action required
 
+- **Every prose string in `src/app/data/caseStudies.ts` is placeholder copy**, prefixed
+  `PLACEHOLDER` so it cannot ship by accident. The page renders and the layout is settled,
+  but `/case-studies/pest-control` currently reads as filler. Replace before this is linked
+  anywhere public — the homepage and the main nav already point at it.
 - **`NEXT_PUBLIC_FORM_ENDPOINT` is not set, so the audit form cannot send.** Sign up for
   Formspree or Web3Forms, then set the var in Vercel (Project → Settings → Environment
   Variables) and in a local `.env.local`. `.env.example` documents the shape. Until it is
@@ -17,6 +21,50 @@ recorded only, per instructions.
 - **`NEXT_PUBLIC_SITE_URL` is not set anywhere.** `metadataBase` falls back to
   `https://jamessalva-portfolio.vercel.app`. If the live URL differs, set the env var in
   Vercel or the OG/Twitter image URLs will resolve against the wrong origin.
+
+## From `feat/case-studies`
+
+- **Tailwind v4 is scanning `public/**/*.html` and generating dead utilities from the concept
+  files into the site-wide stylesheet.** Measured, not guessed: built twice, once with both
+  `concept.html` files in place and once with them moved aside, and the CSS bundle went
+  32,036 → 31,372 bytes. The 664-byte delta is utilities like `.visible`, `.sticky`,
+  `.antialiased`, `.transform`, `.filter` and `.outline` — bare words sitting inside the
+  concepts' own inline `<style>` blocks (`position: sticky`, `visibility: visible`,
+  `-webkit-font-smoothing: antialiased`) that Tailwind's scanner cannot distinguish from class
+  names. Nothing breaks: the concept files never load this stylesheet, and the React app does
+  not use these classes. But it is dead CSS on every page of the site, and it grows with every
+  concept added. Fix is one line in `globals.css` —
+  `@source not "../../public/**/*.html";` — not applied here because the task ruled out
+  changes beyond the four items.
+- **`auditDate` is in the `CaseStudy` interface but has nowhere to render.** The task
+  enumerated the detail page layout as nine specific blocks and `auditDate` is not one of
+  them, so it is populated in the data and displayed nowhere. Either give it a slot (next to
+  the engagement eyebrow is the natural home — an unsolicited audit is a snapshot of a site on
+  a specific date, and that date is part of the claim's credibility) or drop the field.
+- **`financial-advisory` has a full concept but no case study entry**, so
+  `/case-studies/financial-advisory/concept.html` is reachable by direct URL and linked from
+  nowhere. That follows the task, which specified exactly one seeded entry, but the concept
+  file is finished work sitting unreferenced. Add the second entry to `caseStudies.ts` to
+  surface it.
+- **Both concept files load Google Fonts from `fonts.googleapis.com`.** That is fine
+  functionally, but it makes the concepts dependent on a third-party CDN and it means the
+  concept pages phone home to Google on open — worth knowing if a concept is ever shown to a
+  privacy-sensitive prospect, or demoed offline.
+- **The `[slug]` route and the static concept files do not collide, but the margin is one
+  path segment.** `/case-studies/[slug]` matches a single segment, so
+  `/case-studies/pest-control/concept.html` (two segments) falls through to the static
+  handler in `public/`. Verified in dev: the static responses come back with
+  `charset=UTF-8` from the file server while React routes return `charset=utf-8`, and the
+  served bytes are identical to the files on disk. If a nested route like
+  `/case-studies/[slug]/[section]` is ever added, it would shadow these files.
+- **The new case study cards are the first thing on the site with no image.** `ProjectCard`
+  leads with a 48px-tall image band; `CaseStudyCard` is text-only, so on `/case-studies` and
+  in the homepage grid the case study cards sit noticeably shorter and flatter than the
+  project cards they are modelled on. Fine while there is one, worth a look once there are
+  four or five.
+- **`src/app/projects/page.tsx:40` still has the conflicting `mb-4` / `mb-6` pair** flagged
+  in the previous branch's notes, and the editor's Tailwind diagnostics still report it. Not
+  touched — not one of the four tasks.
 
 ## From `feat/conversion`
 
