@@ -36,6 +36,11 @@ recorded only, per instructions.
   themes", but there is no theme toggle. Costs paint work on hover/scroll for no benefit.
 - **`src/app/globals.css`** — `body { padding-top: 64px }` hardcodes the navbar height. If
   the navbar height ever changes, this silently desyncs.
+- **`src/app/experience/page.tsx` — the timeline dots do not sit on the timeline.** Adding
+  `relative` to the `<li>` (task 3) fixed the stacking, but `-left-1.5` is only `-6px` from
+  the `<li>` edge while the `<ul>`'s ruled border is `pl-6` (`24px`) further left. The dots
+  land in the padding, ~18px right of the line. Correct offset is roughly `-left-[29px]`.
+  Left alone — task 3 said change nothing else, and the rewrite kept the same dot markup.
 - **`src/app/data/projects.ts`** — the first project object uses quoted keys
   (`"title":`, `"slug":`) while the other four use unquoted. Left as-is per instructions.
 - **No `sitemap.ts`, `robots.ts`, or `alternates.canonical`** in the metadata. Nice-to-have
