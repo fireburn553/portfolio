@@ -1,33 +1,46 @@
-import Link from "next/link";
 // src/app/components/Hero.tsx
+import Link from "next/link";
+
 export default function Hero() {
   return (
-    <section className="flex flex-col items-center justify-center text-center py-32">
-      <h1 className="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-900 to-red-600">
-        James Charlie Salva
+    <section className="py-20 md:py-28 max-w-3xl">
+      <p className="text-xs font-mono uppercase tracking-[0.18em] text-blue-400">
+        Frontend Developer
+        <span className="text-gray-500">
+          {" "}· Philippines · Working with clients in the US and Southeast Asia
+        </span>
+      </p>
+
+      <h1 className="mt-6 text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05] text-gray-100">
+        I audit websites before I rebuild them.
       </h1>
-      {/* These classes will now work correctly */}
-      <p className="mt-4 text-lg text-gray-700 dark:text-gray-300 max-w-2xl">
-        BS Software Development (BYU-Idaho Online) | BS Information Technology
-        (CNSC)
+
+      <p className="mt-7 text-lg md:text-xl text-gray-400 leading-relaxed">
+        Most redesign quotes are an opinion about how a site looks. I start by
+        measuring what it does — page weight, contrast ratios, where the forms
+        are, how many clicks it takes a customer to reach you. Then the redesign
+        has a job to do.
       </p>
-      <p className="text-md text-gray-600 dark:text-gray-400 mt-2 max-w-xl">
-        Passionate about building software solutions, web applications, and
-        volunteer-driven IT systems.
+
+      <p className="mt-5 text-base text-gray-500 leading-relaxed">
+        Twenty-plus production platforms delivered for a Malaysian gaming
+        operator, and redesigns for small and mid-size businesses. Available for
+        project work and contract engagements.
       </p>
-      <div className="mt-8 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+
+      <div className="mt-10 flex flex-col sm:flex-row gap-3">
+        <Link
+          href="/contact"
+          className="px-7 py-3.5 bg-blue-600 text-white font-medium rounded-lg text-center hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 transition-colors"
+        >
+          Request a free audit
+        </Link>
         <Link
           href="/projects"
-          className="px-8 py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transform hover:scale-105 transition-transform"
+          className="px-7 py-3.5 border border-gray-600 text-gray-200 font-medium rounded-lg text-center hover:bg-gray-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 transition-colors"
         >
-          View Projects
+          See selected work
         </Link>
-        <a
-          href="/contact"
-          className="px-8 py-3 bg-blue-900 text-white rounded-lg shadow-lg hover:bg-blue-800 transform hover:scale-105 transition-transform"
-        >
-          Contact Me
-        </a>
       </div>
     </section>
   );

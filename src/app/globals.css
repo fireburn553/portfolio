@@ -1,6 +1,8 @@
 /* src/app/globals.css */
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 body {
   /* We ONLY want padding here. The colors are handled in layout.tsx */
   padding-top: 64px;
