@@ -14,6 +14,7 @@ const categories: string[] = [
   "Dashboards",
   "Marketing Sites",
   "Audits",
+  "Testing",
 ];
 
 export default function ProjectsPage() {
@@ -94,6 +95,7 @@ export default function ProjectsPage() {
               demo={project.demo}
               slug={project.slug}
               confidential={project.confidential}
+              era={project.era}
             />
           ))
         ) : (

@@ -30,6 +30,11 @@ export default async function ProjectDetailPage({
       <Link href="/projects" className="text-blue-600 hover:underline">
         &larr; Back to Projects
       </Link>
+      {project.era === "coursework" && (
+        <span className="inline-block mt-4 px-2 py-0.5 rounded-full text-[11px] font-medium tracking-wide bg-gray-700 text-gray-300 border border-gray-600">
+          Coursework
+        </span>
+      )}
       <h1 className="text-4xl font-bold mt-4  dark:text-blue-300 mb-6">
         {project.title}
       </h1>

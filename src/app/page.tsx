@@ -74,6 +74,7 @@ export default function Home() {
               demo={project.demo}
               slug={project.slug}
               confidential={project.confidential}
+              era={project.era}
             />
           ))}
         </div>
