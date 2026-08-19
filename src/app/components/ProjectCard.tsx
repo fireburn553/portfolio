@@ -14,6 +14,7 @@ interface Props {
   demo?: string;
   slug: string;
   confidential?: boolean;
+  era?: "professional" | "coursework";
 }
 
 export default function ProjectCard({
@@ -25,6 +26,7 @@ export default function ProjectCard({
   demo,
   slug,
   confidential,
+  era,
 }: Props) {
   const [imageError, setImageError] = useState(false);
   // Confidential entries ship with no screenshots, so `image` can be undefined.
@@ -61,6 +63,11 @@ export default function ProjectCard({
         )}
       </div>
       <div className="p-4 flex flex-col flex-grow">
+        {era === "coursework" && (
+          <span className="self-start mb-2 px-2 py-0.5 rounded-full text-[11px] font-medium tracking-wide bg-gray-700 text-gray-300 border border-gray-600">
+            Coursework
+          </span>
+        )}
         <h3 className="font-bold text-lg text-blue-900 dark:text-blue-300">
           {title}
         </h3>

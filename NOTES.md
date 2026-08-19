@@ -1,12 +1,21 @@
 # NOTES
 
 Things noticed while doing the six tasks on `fix/critical`, the five on
-`fix/positioning`, the four on `feat/conversion`, the four on `feat/case-studies` and the
-four on `feat/homepage-surfacing`. **Nothing here was fixed** — recorded only, per
-instructions.
+`fix/positioning`, the four on `feat/conversion`, the four on `feat/case-studies`, the
+four on `feat/homepage-surfacing` and the four on `feat/student-projects`. **Nothing here
+was fixed** — recorded only, per instructions.
 
 ## Action required
 
+- **The Handcraft Haven deployment is behind Vercel deployment protection and cannot be
+  linked.** Its `website` line was dropped for that reason — see the `feat/student-projects`
+  notes for the evidence. To put the link back: Vercel → Project → Settings → Deployment
+  Protection → disable, or use the production alias rather than the
+  `-qrkxulkje-james-charlies-projects` preview URL, then re-verify and restore the line.
+- **`era` is a guess on two entries — Safety Service Dashboard and Job Application
+  Manager.** Both were labelled `coursework` from circumstantial evidence only. If either was
+  paid or client-directed work, the label is a factual understatement of your own experience
+  and only you can correct it. See the `feat/student-projects` notes.
 - **The fourth credential in `financial-advisory/concept.html` still names Ateneo.** The
   anonymisation sweep closed the third item; the fourth is the same kind of leak and is still
   live. See the `feat/homepage-surfacing` notes.
@@ -24,6 +33,76 @@ instructions.
 - **`NEXT_PUBLIC_SITE_URL` is not set anywhere.** `metadataBase` falls back to
   `https://jamessalva-portfolio.vercel.app`. If the live URL differs, set the env var in
   Vercel or the OG/Twitter image URLs will resolve against the wrong origin.
+
+## From `feat/student-projects`
+
+- **The branch was cut from `feat/homepage-surfacing`, not from `master`, and the task brief
+  said `master`.** `master` is at `e750e75` and carries five projects — no Gaming Platform
+  Portals entry and no Stanway entry. Task 1 named "the gaming platform portals entry"
+  explicitly, so branching from `master` would have made Task 1 impossible and would have
+  discarded ~3,300 lines of unmerged work (case studies, audit form, OG metadata, the Stanway
+  build). Branched off the current tip instead, which is the tree the brief actually
+  describes. **The real issue is that nothing since `fix/critical` has been merged** — the
+  chain `fix/critical → fix/positioning → feat/conversion → feat/case-studies →
+  feat/homepage-surfacing → feat/student-projects` is now six branches deep on top of a
+  `master` that has moved once. Merge the chain down before the next branch, or the divergence
+  keeps compounding.
+- **`handcraft-haven`'s `website` returns HTTP 200, but the 200 is Vercel's login page, not
+  the project.** The rule as written said to drop the line only on a non-200, and a bare
+  `curl -L` does report 200 — which is why this needs stating plainly rather than being
+  silently obeyed. The unfollowed request returns `302` with
+  `Location: https://vercel.com/sso-api?...` and `X-Robots-Tag: noindex`; following redirects
+  lands on `vercel.com/login`. That is Vercel deployment protection on a preview URL. Any
+  visitor clicking the link gets a login wall for an account they do not have, which is worse
+  than a dead link on a portfolio whose pitch is that its claims check out. The `website` line
+  was removed; `github` was kept, and the entry itself is untouched. **This one deviates from
+  the letter of Task 3 and is the only judgement call in the branch that changes a stated
+  instruction** — restore the line in one edit if you disagree.
+- **`test-automation-teton`'s `website` is a genuine 200**, served directly from
+  `fireburn553.github.io` with zero redirects. Kept as supplied.
+- **`era` was inferred, not known, for five of the seven existing entries.** Only the gaming
+  portals entry was assigned by instruction. FSY (Azure repo path `cse325/_git/cse325`, a
+  BYU–Idaho course number) and the ISO Audit System (built for Camarines Norte State College,
+  where the experience page shows a 2019–2023 BS IT) are safe calls. Location Selector is a
+  solo `fireburn553` repo with no client named. **Safety Service Dashboard and Job Application
+  Manager are the weak ones**: the former's own `longDescription` hedges with "likely for
+  organizations like the Philippine Red Cross", which reads as generated copy nobody has
+  verified, and the latter sits under a collaborator's account (`morganmallen`) with no course
+  or client attached. Both were labelled `coursework`. If either was paid, the badge
+  undersells real experience.
+- **Stanway was labelled `professional`, which the brief did not explicitly authorise.** The
+  rule given was coursework for class/volunteer/personal builds and professional for the
+  gaming portals. Stanway is none of those — it is a paid brokerage build on a live custom
+  domain — so leaving it unlabelled would have made it the only entry with no era while
+  sitting second on the homepage. Labelled `professional` on that reasoning. Note this
+  interacts with the unresolved Stanway tech-stack contradiction below: if that entry is
+  eventually reframed as "a build no longer in production", the era label should be revisited
+  at the same time.
+- **The brief's field names disagree with the interface again, the same way as last branch.**
+  It specified `images: []`; the interface field is `image: string[]`. Used `image`. The
+  interface also requires `longDescription`, which the brief did not supply for either new
+  entry, so `description` is duplicated into it — the same stopgap the gaming-platform entry
+  is still carrying. **Three entries now show the card blurb twice on their detail page.**
+  Worth writing real long-form copy for all three in one pass.
+- **"Testing" is a sixth filter button, and the row now wraps on desktop-narrow too.** The
+  Stanway notes below flagged that five buttons wrap on narrow mobile and that "if a sixth
+  category is ever added the row needs a rethink rather than another button". A sixth has now
+  been added, as instructed. The rethink is still not done — a `<select>` on small screens, or
+  a horizontally scrolling row, would both hold up better than `flex-wrap`.
+- **`Testing` is a category with exactly one entry, and `Audits` still has zero.** Two of the
+  six filters are now near-empty. The disabled-when-empty logic means `Audits` still renders
+  greyed out, so the filter row reads as one dead control plus one nearly-dead one.
+- **The Coursework badge is the first thing on a card above the title, so it takes visual
+  precedence over the project name.** Rendered as instructed — muted grey, no negative
+  styling, nothing hidden. But five of the nine cards now carry it, and on `/projects` the
+  grid reads as a column of "Coursework" labels before it reads as a list of projects. If that
+  is not the intended emphasis, moving the badge below the title or inline beside the tech
+  line would keep the honesty without leading with it.
+- **The coursework entries have no screenshots, so five of nine cards show the placeholder
+  SVG.** Both new entries ship `image: []` as specified, joining the gaming portals entry.
+  `/projects` now has three identical grey placeholder tiles.
+- **`npm audit` still reports the same 11 vulnerabilities** recorded at the bottom of this
+  file. No dependency changes were made, per instructions.
 
 ## From `feat/homepage-surfacing`
 

@@ -8,10 +8,16 @@ export interface Project {
   image: string[];
   github?: string;
   demo?: string;
-  category?: "Web Apps" | "Dashboards" | "Marketing Sites" | "Audits";
+  category?:
+    | "Web Apps"
+    | "Dashboards"
+    | "Marketing Sites"
+    | "Audits"
+    | "Testing";
   status?: "Completed" | "In Progress";
   website?: string;
   confidential?: boolean;
+  era?: "professional" | "coursework";
 }
 
 export const projects: Project[] = [
@@ -26,6 +32,7 @@ export const projects: Project[] = [
     image: [],
     category: "Web Apps",
     confidential: true,
+    era: "professional",
   },
   {
     title: "Stanway Real Estate — Toronto Brokerage",
@@ -48,6 +55,7 @@ export const projects: Project[] = [
     category: "Marketing Sites",
     status: "Completed",
     website: "https://stanwayrealestate.com/",
+    era: "professional",
   },
   {
     "title": "Safety Service Dashboard",
@@ -59,7 +67,8 @@ export const projects: Project[] = [
     "github": "https://github.com/fireburn553/ssdashboard",
     "category": "Dashboards",
     "status": "In Progress",
-    "website": "https://ss-dashboard-two.vercel.app/"
+    "website": "https://ss-dashboard-two.vercel.app/",
+    "era": "coursework"
   },
   {
     title: "FSY Attendance System",
@@ -73,6 +82,7 @@ export const projects: Project[] = [
     github: "https://dev.azure.com/utc11dotNetgroupOrganisation/cse325/_git/cse325",
     category: "Web Apps",
     status: "Completed",
+    era: "coursework",
   },
   {
     title: "Location Selector Web App",
@@ -87,6 +97,7 @@ export const projects: Project[] = [
     category: "Web Apps",
     status: "In Progress",
     website: "https://fireburn553.github.io/psgc_frontend/",
+    era: "coursework",
   },
   {
     title: "Job Application Manager",
@@ -100,7 +111,8 @@ export const projects: Project[] = [
     github: "https://github.com/morganmallen/job-application-manager",
     category: "Web Apps",
     status: "Completed",
-    website: "https://morganmallen.github.io/job-application-manager"
+    website: "https://morganmallen.github.io/job-application-manager",
+    era: "coursework",
   },
   {
     title: "Web-Based ISO Audit Management System",
@@ -114,5 +126,33 @@ export const projects: Project[] = [
     github: "https://github.com/fireburn553/webauditiso",
     category: "Dashboards",
     status: "Completed",
+    era: "coursework",
+  },
+  {
+    title: "Handcraft Haven — artisan marketplace",
+    slug: "handcraft-haven",
+    description:
+      "A full-stack marketplace for handmade goods, built as a team project. Product listings, seller product creation and editing, and image upload. Server-side data access with parameterised SQL against Vercel Postgres, and Cloudinary for media.",
+    longDescription:
+      "A full-stack marketplace for handmade goods, built as a team project. Product listings, seller product creation and editing, and image upload. Server-side data access with parameterised SQL against Vercel Postgres, and Cloudinary for media.",
+    tech: ["Next.js 14", "TypeScript", "Vercel Postgres", "Cloudinary", "Tailwind"],
+    image: [],
+    github: "https://github.com/fireburn553/handcraft-haven",
+    category: "Web Apps",
+    era: "coursework",
+  },
+  {
+    title: "Test automation — business directory service",
+    slug: "test-automation-teton",
+    description:
+      "Automated test coverage for a Django business directory service, written for a software testing course. Pytest fixtures, mocked HTTP responses via a stub response class, and smoke tests covering the public endpoints.",
+    longDescription:
+      "Automated test coverage for a Django business directory service, written for a software testing course. Pytest fixtures, mocked HTTP responses via a stub response class, and smoke tests covering the public endpoints.",
+    tech: ["Python", "pytest", "pytest-mock", "Django", "REST"],
+    image: [],
+    github: "https://github.com/fireburn553/cse270-teton",
+    website: "https://fireburn553.github.io/cse270-teton/index.html",
+    category: "Testing",
+    era: "coursework",
   }
 ];
